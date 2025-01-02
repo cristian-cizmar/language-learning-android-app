@@ -1,4 +1,4 @@
-package com.cristiancizmar.learnalanguage.ui.theme
+package com.cristiancizmar.learnalanguage.presentation.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

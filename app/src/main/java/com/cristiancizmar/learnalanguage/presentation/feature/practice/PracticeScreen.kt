@@ -1,4 +1,4 @@
-package com.cristiancizmar.learnalanguage.screens
+package com.cristiancizmar.learnalanguage.presentation.feature.practice
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -14,8 +14,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.cristiancizmar.learnalanguage.ui.components.SelectionButton
-import com.cristiancizmar.learnalanguage.ui.theme.LearnALanguageTheme
+import com.cristiancizmar.learnalanguage.presentation.common.SelectionButton
+import com.cristiancizmar.learnalanguage.presentation.theme.LearnALanguageTheme
 
 @Preview
 @Composable
@@ -100,12 +100,3 @@ fun PracticeScreen(
         }
     }
 }
-
-data class PracticeState(
-    val original: String = "",
-    val translated: String = "",
-    val showTranslation: Boolean = false,
-    val showCheckButtons: Boolean = false,
-    val details: String = "",
-    val ended: Boolean = false
-)

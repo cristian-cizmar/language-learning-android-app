@@ -1,8 +1,8 @@
-package com.cristiancizmar.learnalanguage
+package com.cristiancizmar.learnalanguage.presentation
 
 import android.app.Application
 import android.content.Context
-import com.cristiancizmar.learnalanguage.repository.FileWordsRepository
+import com.cristiancizmar.learnalanguage.data.FileWordsRepository
 
 class App : Application() {
 

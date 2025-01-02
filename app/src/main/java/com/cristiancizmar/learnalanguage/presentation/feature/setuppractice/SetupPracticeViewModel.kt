@@ -1,4 +1,4 @@
-package com.cristiancizmar.learnalanguage.screens
+package com.cristiancizmar.learnalanguage.presentation.feature.setuppractice
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

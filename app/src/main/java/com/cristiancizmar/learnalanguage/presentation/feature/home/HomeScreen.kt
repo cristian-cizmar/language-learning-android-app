@@ -1,17 +1,16 @@
-package com.cristiancizmar.learnalanguage
+package com.cristiancizmar.learnalanguage.presentation.feature.home
 
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.*
+import androidx.compose.material.Surface
+import androidx.compose.material.TextField
+import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -23,30 +22,16 @@ import androidx.core.content.FileProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import com.cristiancizmar.learnalanguage.repository.FileWordsRepository
-import com.cristiancizmar.learnalanguage.ui.components.ScreenSelectionButton
-import com.cristiancizmar.learnalanguage.ui.theme.LearnALanguageTheme
+import com.cristiancizmar.learnalanguage.data.FileWordsRepository
+import com.cristiancizmar.learnalanguage.presentation.common.ScreenSelectionButton
+import com.cristiancizmar.learnalanguage.presentation.navigation.Screen
+import com.cristiancizmar.learnalanguage.presentation.theme.LearnALanguageTheme
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            HomeInitial()
-        }
-    }
-}
-
 @Composable
-fun HomeInitial() {
-    val navController = rememberNavController()
-    SetupNavGraph(navHostController = navController)
-}
-
-@Composable
-fun Home(navController: NavController, viewModel: MainViewModel = viewModel()) {
+fun HomeScreen(navController: NavController, viewModel: HomeViewModel = viewModel()) {
     val files = FileWordsRepository.getFileNames()
     val ctx = LocalContext.current
 
@@ -129,14 +114,9 @@ fun Home(navController: NavController, viewModel: MainViewModel = viewModel()) {
 @Composable
 fun DefaultPreview() {
     LearnALanguageTheme {
-        Home(navController = rememberNavController(), viewModel = viewModel())
+        HomeScreen(navController = rememberNavController(), viewModel = viewModel())
     }
 }
-
-data class MainState(
-    val text: String,
-    val switchLanguages: Boolean = FileWordsRepository.switchLanguages
-)
 
 private fun onFileSelected(context: Context, uri: Uri) {
     val inputStream = context.contentResolver.openInputStream(uri)

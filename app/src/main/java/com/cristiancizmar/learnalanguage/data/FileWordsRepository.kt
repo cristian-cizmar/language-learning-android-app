@@ -1,12 +1,12 @@
-package com.cristiancizmar.learnalanguage.repository
+package com.cristiancizmar.learnalanguage.data
 
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.AssetManager
 import android.util.Log
 import androidx.core.text.isDigitsOnly
-import com.cristiancizmar.learnalanguage.App
-import com.cristiancizmar.learnalanguage.model.Word
+import com.cristiancizmar.learnalanguage.presentation.App
+import com.cristiancizmar.learnalanguage.domain.Word
 
 object FileWordsRepository {
 

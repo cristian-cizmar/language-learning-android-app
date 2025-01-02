@@ -1,4 +1,4 @@
-package com.cristiancizmar.learnalanguage.ui.components
+package com.cristiancizmar.learnalanguage.presentation.common
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.fillMaxWidth

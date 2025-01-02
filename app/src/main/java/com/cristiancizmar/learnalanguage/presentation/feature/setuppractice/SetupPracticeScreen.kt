@@ -1,4 +1,4 @@
-package com.cristiancizmar.learnalanguage.screens
+package com.cristiancizmar.learnalanguage.presentation.feature.setuppractice
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Surface
@@ -10,9 +10,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.cristiancizmar.learnalanguage.ui.components.SelectionButton
-import com.cristiancizmar.learnalanguage.ui.components.WhiteTextField
-import com.cristiancizmar.learnalanguage.ui.theme.LearnALanguageTheme
+import com.cristiancizmar.learnalanguage.presentation.common.SelectionButton
+import com.cristiancizmar.learnalanguage.presentation.common.WhiteTextField
+import com.cristiancizmar.learnalanguage.presentation.theme.LearnALanguageTheme
 
 @Preview
 @Composable
@@ -64,11 +64,3 @@ fun SetupPracticeScreen(
         }
     }
 }
-
-data class SetupPracticeState(
-    val minWords: Int? = null,
-    val maxWords: Int? = null,
-    val answerDelay: Int? = 500,
-    val saveResults: Boolean = false,
-    val difficulty: Int = 1
-)

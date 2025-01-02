@@ -1,4 +1,4 @@
-package com.cristiancizmar.learnalanguage
+package com.cristiancizmar.learnalanguage.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
@@ -6,9 +6,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.cristiancizmar.learnalanguage.screens.PracticeScreen
-import com.cristiancizmar.learnalanguage.screens.SetupPracticeScreen
-import com.cristiancizmar.learnalanguage.screens.WordsScreen
+import com.cristiancizmar.learnalanguage.presentation.feature.home.HomeScreen
+import com.cristiancizmar.learnalanguage.presentation.feature.practice.PracticeScreen
+import com.cristiancizmar.learnalanguage.presentation.feature.setuppractice.SetupPracticeScreen
+import com.cristiancizmar.learnalanguage.presentation.feature.words.WordsScreen
 
 @Composable
 fun SetupNavGraph(navHostController: NavHostController) {
@@ -16,7 +17,7 @@ fun SetupNavGraph(navHostController: NavHostController) {
         composable(
             route = Screen.Home.route
         ) {
-            Home(navController = navHostController)
+            HomeScreen(navController = navHostController)
         }
         composable(
             route = Screen.Words.route

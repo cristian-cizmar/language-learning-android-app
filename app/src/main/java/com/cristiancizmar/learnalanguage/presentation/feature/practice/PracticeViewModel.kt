@@ -1,4 +1,4 @@
-package com.cristiancizmar.learnalanguage.screens
+package com.cristiancizmar.learnalanguage.presentation.feature.practice
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -6,8 +6,8 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cristiancizmar.learnalanguage.model.Word
-import com.cristiancizmar.learnalanguage.repository.FileWordsRepository
+import com.cristiancizmar.learnalanguage.domain.Word
+import com.cristiancizmar.learnalanguage.data.FileWordsRepository
 import com.cristiancizmar.learnalanguage.utils.safeSubList
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

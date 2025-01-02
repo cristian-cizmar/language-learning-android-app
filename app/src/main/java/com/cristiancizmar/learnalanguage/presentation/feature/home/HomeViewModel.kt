@@ -1,14 +1,14 @@
-package com.cristiancizmar.learnalanguage
+package com.cristiancizmar.learnalanguage.presentation.feature.home
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.cristiancizmar.learnalanguage.repository.FileWordsRepository
+import com.cristiancizmar.learnalanguage.data.FileWordsRepository
 
-class MainViewModel : ViewModel() {
+class HomeViewModel : ViewModel() {
 
-    var state by mutableStateOf(MainState(""))
+    var state by mutableStateOf(HomeState(""))
         private set
 
     init {

@@ -1,9 +1,9 @@
-package com.cristiancizmar.learnalanguage.model
+package com.cristiancizmar.learnalanguage.domain
 
 import androidx.compose.ui.graphics.Color
-import com.cristiancizmar.learnalanguage.ui.theme.BlueDer
-import com.cristiancizmar.learnalanguage.ui.theme.GreenDas
-import com.cristiancizmar.learnalanguage.ui.theme.RedDie
+import com.cristiancizmar.learnalanguage.presentation.theme.BlueDer
+import com.cristiancizmar.learnalanguage.presentation.theme.GreenDas
+import com.cristiancizmar.learnalanguage.presentation.theme.RedDie
 import com.cristiancizmar.learnalanguage.utils.cleanWord
 
 data class Word(

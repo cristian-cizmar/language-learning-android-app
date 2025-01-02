@@ -1,4 +1,4 @@
-package com.cristiancizmar.learnalanguage.ui.components
+package com.cristiancizmar.learnalanguage.presentation.common
 
 import androidx.compose.foundation.clickable
 import androidx.compose.material.Text

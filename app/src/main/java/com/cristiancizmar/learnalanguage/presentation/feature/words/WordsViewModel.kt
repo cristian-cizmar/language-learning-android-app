@@ -1,11 +1,11 @@
-package com.cristiancizmar.learnalanguage.screens
+package com.cristiancizmar.learnalanguage.presentation.feature.words
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.cristiancizmar.learnalanguage.model.Word
-import com.cristiancizmar.learnalanguage.repository.FileWordsRepository
+import com.cristiancizmar.learnalanguage.domain.Word
+import com.cristiancizmar.learnalanguage.data.FileWordsRepository
 import com.cristiancizmar.learnalanguage.utils.safeSubList
 
 const val DEFAULT_MIN_WORDS = 1

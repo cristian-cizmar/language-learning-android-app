@@ -1,4 +1,4 @@
-package com.cristiancizmar.learnalanguage.screens
+package com.cristiancizmar.learnalanguage.presentation.feature.words
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,12 +14,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.cristiancizmar.learnalanguage.model.Word
-import com.cristiancizmar.learnalanguage.ui.components.SelectionButton
-import com.cristiancizmar.learnalanguage.ui.components.SimpleButton
-import com.cristiancizmar.learnalanguage.ui.components.WhiteTextField
-import com.cristiancizmar.learnalanguage.ui.components.WordRow
-import com.cristiancizmar.learnalanguage.ui.theme.LearnALanguageTheme
+import com.cristiancizmar.learnalanguage.presentation.common.SelectionButton
+import com.cristiancizmar.learnalanguage.presentation.common.SimpleButton
+import com.cristiancizmar.learnalanguage.presentation.common.WhiteTextField
+import com.cristiancizmar.learnalanguage.presentation.common.WordRow
+import com.cristiancizmar.learnalanguage.presentation.theme.LearnALanguageTheme
 
 // TODO - Add search function
 
@@ -133,13 +132,3 @@ fun WordsScreen(
         }
     }
 }
-
-data class WordsState(
-    val words: List<Word> = emptyList(),
-    val searchedWords: List<Word> = emptyList(),
-    val searchText: String = "",
-    val selectedWord: Word? = null,
-    val customSorting: Boolean = false,
-    val minWords: Int? = DEFAULT_MIN_WORDS,
-    val maxWords: Int? = DEFAULT_MAX_WORDS,
-)
