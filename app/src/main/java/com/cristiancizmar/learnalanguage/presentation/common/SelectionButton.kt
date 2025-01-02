@@ -9,18 +9,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-@Preview
-@Composable
-fun SelectionButton(
-) {
-    SelectionButton(
-        "SelectionButton",
-        {},
-        paddingHorizontal = 20,
-        paddingVertical = 20,
-    )
-}
-
 @Composable
 fun SelectionButton(
     text: String,
@@ -42,4 +30,16 @@ fun SelectionButton(
             color = Color.White
         )
     }
+}
+
+@Preview
+@Composable
+fun SelectionButton(
+) {
+    SelectionButton(
+        "SelectionButton",
+        {},
+        paddingHorizontal = 20,
+        paddingVertical = 20,
+    )
 }

@@ -11,6 +11,14 @@ import com.cristiancizmar.learnalanguage.presentation.feature.practice.PracticeS
 import com.cristiancizmar.learnalanguage.presentation.feature.setuppractice.SetupPracticeScreen
 import com.cristiancizmar.learnalanguage.presentation.feature.words.WordsScreen
 
+sealed class Screen(val route: String) {
+    object Home : Screen(route = "Home")
+    object Words : Screen(route = "Words")
+    object SetupPractice : Screen(route = "SetupPractice")
+    object Practice :
+        Screen(route = "Practice/{minWords}&{maxWords}&{answerDelay}&{saveResults}&{difficulty}")
+}
+
 @Composable
 fun SetupNavGraph(navHostController: NavHostController) {
     NavHost(navController = navHostController, startDestination = Screen.Home.route) {
@@ -48,12 +56,4 @@ fun SetupNavGraph(navHostController: NavHostController) {
             )
         }
     }
-}
-
-sealed class Screen(val route: String) {
-    object Home : Screen(route = "Home")
-    object Words : Screen(route = "Words")
-    object SetupPractice : Screen(route = "SetupPractice")
-    object Practice :
-        Screen(route = "Practice/{minWords}&{maxWords}&{answerDelay}&{saveResults}&{difficulty}")
 }

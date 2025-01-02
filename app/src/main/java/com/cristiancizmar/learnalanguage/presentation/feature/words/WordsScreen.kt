@@ -10,17 +10,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.cristiancizmar.learnalanguage.presentation.common.SelectionButton
 import com.cristiancizmar.learnalanguage.presentation.common.SimpleButton
-import com.cristiancizmar.learnalanguage.presentation.common.WhiteTextField
+import com.cristiancizmar.learnalanguage.presentation.common.BasicTextField
 import com.cristiancizmar.learnalanguage.presentation.common.WordRow
 import com.cristiancizmar.learnalanguage.presentation.theme.LearnALanguageTheme
-
-// TODO - Add search function
 
 @Preview
 @Composable
@@ -28,7 +25,6 @@ fun WordsScreen(
     modifier: Modifier = Modifier,
     viewModel: WordsViewModel = viewModel()
 ) {
-    val context = LocalContext.current
     LearnALanguageTheme {
         Surface(color = Color.Black) {
             Column(
@@ -40,13 +36,13 @@ fun WordsScreen(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    WhiteTextField(
+                    BasicTextField(
                         modifier = Modifier.requiredWidth(100.dp),
                         value = viewModel.state.minWords?.toString() ?: "",
                         onValueChange = { viewModel.setMinWords(it) },
                         label = "MinWords"
                     )
-                    WhiteTextField(
+                    BasicTextField(
                         modifier = Modifier.requiredWidth(100.dp),
                         value = viewModel.state.maxWords?.toString() ?: "",
                         onValueChange = { viewModel.setMaxWords(it) },
@@ -102,7 +98,7 @@ fun WordsScreen(
                         WordRow(word = word, color = Color.Cyan)
                     }
                 }
-                WhiteTextField(
+                BasicTextField(
                     value = viewModel.state.searchText,
                     onValueChange = { viewModel.updateSearch(it) },
                     label = "Search"

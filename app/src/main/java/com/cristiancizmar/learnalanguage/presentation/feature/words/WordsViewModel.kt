@@ -13,6 +13,8 @@ const val DEFAULT_MAX_WORDS = 5000
 
 class WordsViewModel : ViewModel() {
 
+    enum class SORT { IDX, ATT, PERC, DIFF, ORIG }
+
     var state by mutableStateOf(WordsState())
         private set
 
@@ -22,40 +24,6 @@ class WordsViewModel : ViewModel() {
 
     init {
         loadFile()
-    }
-
-    private fun loadFile() {
-        val minWords = (state.minWords ?: 1) - 1
-        var maxWords = (state.maxWords ?: 5000)
-        if (maxWords < minWords) {
-            maxWords = minWords
-        }
-
-        var newList = getWordsWithAllMeanings()
-            .safeSubList(minWords, maxWords)
-            .sortedBy {
-                when (sort) {
-                    SORT.IDX -> it.index
-                    SORT.ATT -> it.attempts
-                    SORT.PERC -> it.guessesPercentageInt()
-                    SORT.DIFF -> it.difficulty
-                    else -> it.index
-                }
-            }
-        if (sort == SORT.ORIG) {
-            newList = newList.sortedBy {
-                it.original.lowercase()
-            }
-        }
-        if (!sortAsc) {
-            newList = newList.reversed()
-        }
-        state = state.copy(words = newList)
-
-        state = state.copy(
-            customSorting =
-            sort != SORT.IDX || !sortAsc || state.minWords != DEFAULT_MIN_WORDS || state.maxWords != DEFAULT_MAX_WORDS
-        )
     }
 
     fun updateSearch(searchText: String) {
@@ -133,7 +101,6 @@ class WordsViewModel : ViewModel() {
         loadFile()
     }
 
-    // todo this can be done more efficiently
     private fun getWordsWithAllMeanings(): List<Word> {
         val words = FileWordsRepository.getWordsFromFile().toMutableList()
         val finalList = words.map { it.copy() } // deep copy
@@ -150,5 +117,37 @@ class WordsViewModel : ViewModel() {
         return finalList
     }
 
-    enum class SORT { IDX, ATT, PERC, DIFF, ORIG }
+    private fun loadFile() {
+        val minWords = (state.minWords ?: 1) - 1
+        var maxWords = (state.maxWords ?: 5000)
+        if (maxWords < minWords) {
+            maxWords = minWords
+        }
+
+        var newList = getWordsWithAllMeanings()
+            .safeSubList(minWords, maxWords)
+            .sortedBy {
+                when (sort) {
+                    SORT.IDX -> it.index
+                    SORT.ATT -> it.attempts
+                    SORT.PERC -> it.guessesPercentageInt()
+                    SORT.DIFF -> it.difficulty
+                    else -> it.index
+                }
+            }
+        if (sort == SORT.ORIG) {
+            newList = newList.sortedBy {
+                it.original.lowercase()
+            }
+        }
+        if (!sortAsc) {
+            newList = newList.reversed()
+        }
+        state = state.copy(words = newList)
+
+        state = state.copy(
+            customSorting =
+            sort != SORT.IDX || !sortAsc || state.minWords != DEFAULT_MIN_WORDS || state.maxWords != DEFAULT_MAX_WORDS
+        )
+    }
 }

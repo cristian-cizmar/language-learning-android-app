@@ -6,40 +6,35 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.cristiancizmar.learnalanguage.presentation.common.SelectionButton
-import com.cristiancizmar.learnalanguage.presentation.common.WhiteTextField
+import com.cristiancizmar.learnalanguage.presentation.common.BasicTextField
 import com.cristiancizmar.learnalanguage.presentation.theme.LearnALanguageTheme
 
-@Preview
 @Composable
 fun SetupPracticeScreen(
-    modifier: Modifier = Modifier,
     navController: NavController,
     viewModel: SetupPracticeViewModel = viewModel()
 ) {
-    val context = LocalContext.current
-    LearnALanguageTheme() {
+    LearnALanguageTheme {
         Surface(color = Color.Black) {
             Column(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                WhiteTextField(
+                BasicTextField(
                     value = viewModel.state.minWords?.toString() ?: "",
                     onValueChange = { viewModel.updateMin(it.toIntOrNull()) },
                     label = "min words"
                 )
-                WhiteTextField(
+                BasicTextField(
                     value = viewModel.state.maxWords?.toString() ?: "",
                     onValueChange = { viewModel.updateMax(it.toIntOrNull()) },
                     label = "max words"
                 )
-                WhiteTextField(
+                BasicTextField(
                     value = viewModel.state.answerDelay?.toString() ?: "",
                     onValueChange = { viewModel.updateanswerDelay(it.toIntOrNull()) },
                     label = "translation delay"

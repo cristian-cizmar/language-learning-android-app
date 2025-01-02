@@ -31,22 +31,19 @@ data class Word(
         val derPrefix = "der "
         val diePrefix = "die "
         val dasPrefix = "das "
-        if (original.cleanWord().startsWith(derPrefix)) {
+        if (original.cleanWord().startsWith(derPrefix)
+            || translated.cleanWord().startsWith(derPrefix)
+        ) {
             return BlueDer
         }
-        if (original.cleanWord().startsWith(diePrefix)) {
+        if (original.cleanWord().startsWith(diePrefix)
+            || translated.cleanWord().startsWith(diePrefix)
+        ) {
             return RedDie
         }
-        if (original.cleanWord().startsWith(dasPrefix)) {
-            return GreenDas
-        }
-        if (translated.cleanWord().startsWith(derPrefix)) {
-            return BlueDer
-        }
-        if (translated.cleanWord().startsWith(diePrefix)) {
-            return RedDie
-        }
-        if (translated.cleanWord().startsWith(dasPrefix)) {
+        if (original.cleanWord().startsWith(dasPrefix)
+            || translated.cleanWord().startsWith(dasPrefix)
+        ) {
             return GreenDas
         }
         return Color.Black

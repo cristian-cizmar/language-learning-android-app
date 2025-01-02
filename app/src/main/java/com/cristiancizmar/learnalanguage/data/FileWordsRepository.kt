@@ -3,19 +3,22 @@ package com.cristiancizmar.learnalanguage.data
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.AssetManager
+import android.net.Uri
 import android.util.Log
 import androidx.core.text.isDigitsOnly
 import com.cristiancizmar.learnalanguage.presentation.App
 import com.cristiancizmar.learnalanguage.domain.Word
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
 object FileWordsRepository {
 
-    var fileName = "spanish.txt" // todo update
+    var fileName = getFileNames().first()
     var switchLanguages = false
     private var prefs: SharedPreferences? = null
     private const val packageName = "com.cristiancizmar.learnalanguage"
 
-    fun initPrefferences(context: Context) {
+    fun initPreferences(context: Context) {
         prefs = context.getSharedPreferences(
             packageName,
             Context.MODE_PRIVATE
@@ -92,12 +95,6 @@ object FileWordsRepository {
         editor.apply()
     }
 
-    fun getWordCorrectness(wordId: Int, correct: Boolean): Int {
-        val prefId = "$packageName.$fileName.$wordId.$correct"
-        return prefs!!.getInt(prefId, 0)
-    }
-
-
     fun setWordDifficulty(wordId: Int, difficulty: Int) {
         val prefId = "$packageName.$fileName.$wordId.difficulty"
         val editor = prefs!!.edit()
@@ -105,14 +102,17 @@ object FileWordsRepository {
         editor.apply()
     }
 
-    fun getWordDifficulty(wordId: Int): Int {
-        val prefId = "$packageName.$fileName.$wordId.difficulty"
-        return prefs!!.getInt(prefId, 1)
-    }
-
     fun getAllData() = prefs?.all.toString()
 
-    fun importBackup(fileContent: String) {
+    fun importBackupFromFile(context: Context, uri: Uri) {
+        val inputStream = context.contentResolver.openInputStream(uri)
+        val reader = BufferedReader(InputStreamReader(inputStream))
+        val content = reader.use { it.readText() }
+        inputStream?.close()
+        importBackup(content)
+    }
+
+    private fun importBackup(fileContent: String) {
         prefs?.edit()?.clear()?.apply()
 
         val savedValuesList = fileContent
@@ -149,5 +149,15 @@ object FileWordsRepository {
         val editor = prefs!!.edit()
         editor.putInt(prefId, prefIntValue)
         editor.apply()
+    }
+
+    private fun getWordCorrectness(wordId: Int, correct: Boolean): Int {
+        val prefId = "$packageName.$fileName.$wordId.$correct"
+        return prefs!!.getInt(prefId, 0)
+    }
+
+    private fun getWordDifficulty(wordId: Int): Int {
+        val prefId = "$packageName.$fileName.$wordId.difficulty"
+        return prefs!!.getInt(prefId, 1)
     }
 }

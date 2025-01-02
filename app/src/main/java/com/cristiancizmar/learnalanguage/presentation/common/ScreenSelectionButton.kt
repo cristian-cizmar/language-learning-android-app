@@ -11,13 +11,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-@Preview
-@Composable
-fun ScreenSelectionButton(
-) {
-    ScreenSelectionButton("ScreenSelectionButton") {}
-}
-
 @Composable
 fun ScreenSelectionButton(
     text: String,
@@ -32,4 +25,11 @@ fun ScreenSelectionButton(
     ) {
         Text(text, color = Color.White)
     }
+}
+
+@Preview
+@Composable
+fun ScreenSelectionButton(
+) {
+    ScreenSelectionButton("ScreenSelectionButton") {}
 }

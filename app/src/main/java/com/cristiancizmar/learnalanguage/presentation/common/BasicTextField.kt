@@ -8,7 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 
 @Composable
-fun WhiteTextField(
+fun BasicTextField(
     modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,

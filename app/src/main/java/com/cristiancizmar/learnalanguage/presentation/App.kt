@@ -10,7 +10,7 @@ class App : Application() {
         super.onCreate()
 
         appContext = applicationContext
-        FileWordsRepository.initPrefferences(this)
+        FileWordsRepository.initPreferences(this)
     }
 
     companion object {
