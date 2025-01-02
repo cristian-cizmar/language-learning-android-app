@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.AssetManager
 import android.util.Log
+import androidx.core.text.isDigitsOnly
 import com.cristiancizmar.learnalanguage.App
 import com.cristiancizmar.learnalanguage.model.Word
 
@@ -12,10 +13,11 @@ object FileWordsRepository {
     var fileName = "spanish.txt" // todo update
     var switchLanguages = false
     private var prefs: SharedPreferences? = null
+    private const val packageName = "com.cristiancizmar.learnalanguage"
 
     fun initPrefferences(context: Context) {
         prefs = context.getSharedPreferences(
-            "com.cristiancizmar.learnalanguage",
+            packageName,
             Context.MODE_PRIVATE
         )
     }
@@ -34,7 +36,6 @@ object FileWordsRepository {
         val wordsList = words
             .map { it.split("\\s+".toRegex()).take(5).map { field -> field.replace("_", " ") } }
             .map {
-                Log.d("ccgg", it.size.toString())
                 val w = if (it.size == 5) {
                     Word(
                         index = it.getOrNull(0)?.toIntOrNull() ?: 0,
@@ -77,14 +78,14 @@ object FileWordsRepository {
 
     fun setMainText(text: String) {
         val editor = prefs!!.edit()
-        editor.putString("mainText", text)
+        editor.putString("$packageName.mainText", text)
         editor.apply()
     }
 
-    fun getMainText() = prefs!!.getString("mainText", "") ?: ""
+    fun getMainText() = prefs!!.getString("$packageName.mainText", "") ?: ""
 
     fun setWordCorrectness(wordId: Int, correct: Boolean) {
-        val prefId = "com.cristiancizmar.learnalanguage.$fileName.$wordId.$correct"
+        val prefId = "$packageName.$fileName.$wordId.$correct"
         val prevValue = prefs!!.getInt(prefId, 0)
         val editor = prefs!!.edit()
         editor.putInt(prefId, prevValue + 1)
@@ -92,20 +93,61 @@ object FileWordsRepository {
     }
 
     fun getWordCorrectness(wordId: Int, correct: Boolean): Int {
-        val prefId = "com.cristiancizmar.learnalanguage.$fileName.$wordId.$correct"
+        val prefId = "$packageName.$fileName.$wordId.$correct"
         return prefs!!.getInt(prefId, 0)
     }
 
 
     fun setWordDifficulty(wordId: Int, difficulty: Int) {
-        val prefId = "com.cristiancizmar.learnalanguage.$fileName.$wordId.difficulty"
+        val prefId = "$packageName.$fileName.$wordId.difficulty"
         val editor = prefs!!.edit()
         editor.putInt(prefId, difficulty)
         editor.apply()
     }
 
     fun getWordDifficulty(wordId: Int): Int {
-        val prefId = "com.cristiancizmar.learnalanguage.$fileName.$wordId.difficulty"
+        val prefId = "$packageName.$fileName.$wordId.difficulty"
         return prefs!!.getInt(prefId, 1)
+    }
+
+    fun getAllData() = prefs?.all.toString()
+
+    fun importBackup(fileContent: String) {
+        prefs?.edit()?.clear()?.apply()
+
+        val savedValuesList = fileContent
+            .substring(1, fileContent.length - 1)
+            .split(", $packageName.")
+        val cleanValuesList = mutableListOf<String>()
+
+        savedValuesList.forEach {
+            if (it.contains("$packageName.")) {
+                // for the first item in the list
+                cleanValuesList.add(it.replace("$packageName.", ""))
+            } else {
+                cleanValuesList.add(it)
+            }
+        }
+
+        cleanValuesList.forEach {
+            val prefKey = it.substringBefore("=")
+            val prefValue = it.substringAfter("=")
+
+            if (prefValue.isDigitsOnly()) {
+                prefValue.toIntOrNull()?.let { intPrefValue ->
+                    saveIntValue(prefKey, intPrefValue)
+                }
+            } else {
+                setMainText(prefValue)
+            }
+        }
+    }
+
+    private fun saveIntValue(prefKey: String, prefIntValue: Int) {
+        Log.d("FileWordsRepository", "save $prefKey - $prefIntValue")
+        val prefId = "$packageName.$prefKey"
+        val editor = prefs!!.edit()
+        editor.putInt(prefId, prefIntValue)
+        editor.apply()
     }
 }
