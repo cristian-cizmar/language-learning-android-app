@@ -9,10 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.cristiancizmar.learnalanguage.R
 import com.cristiancizmar.learnalanguage.presentation.common.SelectionButton
 import com.cristiancizmar.learnalanguage.presentation.theme.LearnALanguageTheme
 
@@ -47,7 +49,7 @@ fun PracticeScreen(
                     modifier = Modifier
                         .padding(10.dp, 10.dp)
                         .fillMaxWidth(),
-                    text = "remember to lock your app",
+                    text = stringResource(R.string.lock_reminder),
                     color = Color.White,
                     textAlign = TextAlign.End
                 )
@@ -68,7 +70,11 @@ fun PracticeScreen(
                 }
                 if (!viewModel.state.ended) {
                     SelectionButton(
-                        text = if (viewModel.state.showTranslation) viewModel.state.translated else "click for answer",
+                        text = if (viewModel.state.showTranslation) {
+                            viewModel.state.translated
+                        } else {
+                            stringResource(R.string.click_for_answer)
+                        },
                         onClick = { viewModel.onClickShowAnswer() },
                         paddingHorizontal = 20,
                         paddingVertical = 10
@@ -81,14 +87,14 @@ fun PracticeScreen(
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
                         SelectionButton(
-                            text = "Wrong",
-                            { viewModel.onClickWrong() },
+                            text = stringResource(R.string.wrong),
+                            onClick = { viewModel.onClickWrong() },
                             paddingHorizontal = 20,
                             paddingVertical = 10
                         )
                         SelectionButton(
-                            text = "Correct",
-                            { viewModel.onClickCorrect() },
+                            text = stringResource(R.string.correct),
+                            onClick = { viewModel.onClickCorrect() },
                             paddingHorizontal = 20,
                             paddingVertical = 10
                         )

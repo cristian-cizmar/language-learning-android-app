@@ -18,7 +18,7 @@ class SetupPracticeViewModel : ViewModel() {
         state = state.copy(maxWords = max)
     }
 
-    fun updateanswerDelay(delay: Int?) {
+    fun updateAnswerDelay(delay: Int?) {
         state = state.copy(answerDelay = delay)
     }
 

@@ -143,11 +143,9 @@ class WordsViewModel : ViewModel() {
         if (!sortAsc) {
             newList = newList.reversed()
         }
-        state = state.copy(words = newList)
-
         state = state.copy(
-            customSorting =
-            sort != SORT.IDX || !sortAsc || state.minWords != DEFAULT_MIN_WORDS || state.maxWords != DEFAULT_MAX_WORDS
+            words = newList,
+            customSorting = sort != SORT.IDX || !sortAsc || state.minWords != DEFAULT_MIN_WORDS || state.maxWords != DEFAULT_MAX_WORDS
         )
     }
 }

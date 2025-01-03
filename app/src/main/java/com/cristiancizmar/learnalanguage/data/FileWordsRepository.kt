@@ -4,10 +4,9 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.AssetManager
 import android.net.Uri
-import android.util.Log
 import androidx.core.text.isDigitsOnly
-import com.cristiancizmar.learnalanguage.presentation.App
 import com.cristiancizmar.learnalanguage.domain.Word
+import com.cristiancizmar.learnalanguage.presentation.App
 import java.io.BufferedReader
 import java.io.InputStreamReader
 
@@ -129,26 +128,25 @@ object FileWordsRepository {
             }
         }
 
-        cleanValuesList.forEach {
-            val prefKey = it.substringBefore("=")
-            val prefValue = it.substringAfter("=")
-
-            if (prefValue.isDigitsOnly()) {
-                prefValue.toIntOrNull()?.let { intPrefValue ->
-                    saveIntValue(prefKey, intPrefValue)
-                }
-            } else {
-                setMainText(prefValue)
-            }
-        }
-    }
-
-    private fun saveIntValue(prefKey: String, prefIntValue: Int) {
-        Log.d("FileWordsRepository", "save $prefKey - $prefIntValue")
-        val prefId = "$packageName.$prefKey"
         val editor = prefs!!.edit()
-        editor.putInt(prefId, prefIntValue)
-        editor.apply()
+
+        cleanValuesList
+            .chunked(50)
+            .forEach { chunk ->
+                chunk.forEach {
+                    val prefKey = it.substringBefore("=")
+                    val prefValue = it.substringAfter("=")
+
+                    if (prefValue.isDigitsOnly()) {
+                        prefValue.toIntOrNull()?.let { intPrefValue ->
+                            editor.putInt("$packageName.$prefKey", intPrefValue)
+                        }
+                    } else {
+                        editor.putString("$packageName.mainText", prefValue)
+                    }
+                }
+                editor.apply()
+            }
     }
 
     private fun getWordCorrectness(wordId: Int, correct: Boolean): Int {

@@ -14,11 +14,12 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun ScreenSelectionButton(
     text: String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     OutlinedButton(
         onClick = { onClick.invoke() },
-        Modifier
+        modifier
             .fillMaxWidth()
             .padding(40.dp, 0.dp),
         border = BorderStroke(2.dp, Color.White)
@@ -31,5 +32,5 @@ fun ScreenSelectionButton(
 @Composable
 fun ScreenSelectionButton(
 ) {
-    ScreenSelectionButton("ScreenSelectionButton") {}
+    ScreenSelectionButton("ScreenSelectionButton", {})
 }

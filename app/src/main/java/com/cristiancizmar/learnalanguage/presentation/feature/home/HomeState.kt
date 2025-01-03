@@ -4,5 +4,6 @@ import com.cristiancizmar.learnalanguage.data.FileWordsRepository
 
 data class HomeState(
     val text: String,
-    val switchLanguages: Boolean = FileWordsRepository.switchLanguages
+    val switchLanguages: Boolean = FileWordsRepository.switchLanguages,
+    val files: List<String>
 )
