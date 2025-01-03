@@ -7,8 +7,8 @@ Created using:
 - Kotlin
 
 Features:
-- See a customizable list of words, along with lots of data such as their difficulty and how often you succesfully translated them
-- Practice your vocabulary in a fully customizable way, select which words you want to practice based criterias such as difficulty
-- Use your own lists of words or use the lists preinstalled in the app
-- The notes feature will help you organise your language learning plan and remember important things
-- Import and export your data to make sure you don't lose it
+- See a customizable list of words, along with detailed data such as their difficulty level and how often you successfully translated them
+- Practice your vocabulary in a fully customizable way. Select which words you want to practice based on criteria such as difficulty
+- Use your own word lists or choose from the preinstalled lists in the app
+- The notes feature helps you organize your language learning plan and remember important details
+- Import and export your data to ensure you never lose it
