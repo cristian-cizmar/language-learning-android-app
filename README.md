@@ -2,8 +2,9 @@
 
 Created using:
 - Jetpack Compose
-- Kotlin
 - MVI architecture
+- Coroutines
+- Kotlin
 
 Features:
 - See a customizable list of words, along with lots of data such as their difficulty and how often you succesfully translated them
