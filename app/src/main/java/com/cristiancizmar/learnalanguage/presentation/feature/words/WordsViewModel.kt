@@ -7,11 +7,15 @@ import androidx.lifecycle.ViewModel
 import com.cristiancizmar.learnalanguage.domain.Word
 import com.cristiancizmar.learnalanguage.data.FileWordsRepository
 import com.cristiancizmar.learnalanguage.utils.safeSubList
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
 const val DEFAULT_MIN_WORDS = 1
 const val DEFAULT_MAX_WORDS = 5000
 
-class WordsViewModel : ViewModel() {
+@HiltViewModel
+class WordsViewModel @Inject constructor(private val fileWordsRepository: FileWordsRepository) :
+    ViewModel() {
 
     enum class SORT { IDX, ATT, PERC, DIFF, ORIG }
 
@@ -84,7 +88,7 @@ class WordsViewModel : ViewModel() {
             selectedWord = state.selectedWord?.copy(difficulty = newDifficulty)
         )
         state.selectedWord?.let { word ->
-            FileWordsRepository.setWordDifficulty(word.index, newDifficulty)
+            fileWordsRepository.setWordDifficulty(word.index, newDifficulty)
         }
 
         loadFile()
@@ -102,7 +106,7 @@ class WordsViewModel : ViewModel() {
     }
 
     private fun getWordsWithAllMeanings(): List<Word> {
-        val words = FileWordsRepository.getWordsFromFile().toMutableList()
+        val words = fileWordsRepository.getWordsFromFile().toMutableList()
         val finalList = words.map { it.copy() } // deep copy
 
         words.forEachIndexed { index, firstWord ->

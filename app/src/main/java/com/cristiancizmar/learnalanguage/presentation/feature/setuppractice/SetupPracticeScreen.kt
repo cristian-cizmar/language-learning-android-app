@@ -7,6 +7,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.cristiancizmar.learnalanguage.R
@@ -17,7 +18,7 @@ import com.cristiancizmar.learnalanguage.presentation.theme.LearnALanguageTheme
 @Composable
 fun SetupPracticeScreen(
     navController: NavController,
-    viewModel: SetupPracticeViewModel = viewModel()
+    viewModel: SetupPracticeViewModel = hiltViewModel()
 ) {
     LearnALanguageTheme {
         Surface(color = Color.Black) {

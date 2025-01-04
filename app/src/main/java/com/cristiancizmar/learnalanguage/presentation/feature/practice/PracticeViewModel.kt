@@ -9,10 +9,16 @@ import androidx.lifecycle.viewModelScope
 import com.cristiancizmar.learnalanguage.domain.Word
 import com.cristiancizmar.learnalanguage.data.FileWordsRepository
 import com.cristiancizmar.learnalanguage.utils.safeSubList
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class PracticeViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
+@HiltViewModel
+class PracticeViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
+    private val fileWordsRepository: FileWordsRepository
+) : ViewModel() {
 
     private var minWords = 0
     private var maxWords = 0
@@ -63,7 +69,7 @@ class PracticeViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
     fun onClickCorrect() {
         if (saveResults) {
-            FileWordsRepository.setWordCorrectness(currentWord.index, true)
+            fileWordsRepository.setWordCorrectness(currentWord.index, true)
         }
         correct++
         loadNextWord()
@@ -71,14 +77,14 @@ class PracticeViewModel(savedStateHandle: SavedStateHandle) : ViewModel() {
 
     fun onClickWrong() {
         if (saveResults) {
-            FileWordsRepository.setWordCorrectness(currentWord.index, false)
+            fileWordsRepository.setWordCorrectness(currentWord.index, false)
         }
         wrong++
         loadNextWord()
     }
 
     private fun loadWordsAndInit() {
-        allWords = FileWordsRepository.getWordsFromFile()
+        allWords = fileWordsRepository.getWordsFromFile()
         remainingWords = allWords
             .safeSubList(minWords, maxWords)
             .filter { it.difficulty >= minDifficulty }

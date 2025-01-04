@@ -4,14 +4,20 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import androidx.core.content.FileProvider
-import com.cristiancizmar.learnalanguage.data.FileWordsRepository
+import com.cristiancizmar.learnalanguage.di.RepositoryEntryPoint
+import com.cristiancizmar.learnalanguage.presentation.App
+import dagger.hilt.android.EntryPointAccessors
 import java.io.File
 
 fun shareBackupFile(context: Context) {
+    val repositoryEntryPoint = EntryPointAccessors.fromApplication(
+        App.appContext!!,
+        RepositoryEntryPoint::class.java
+    )
     val backupFileName = "learn-a-language-backup.txt"
     context.openFileOutput(backupFileName, Context.MODE_PRIVATE)
         .use {
-            it.write(FileWordsRepository.getAllData().toByteArray())
+            it.write(repositoryEntryPoint.getFileWordsRepository().getAllData().toByteArray())
         }
     val file = File(context.filesDir, backupFileName)
 

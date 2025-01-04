@@ -7,36 +7,41 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.cristiancizmar.learnalanguage.data.FileWordsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class HomeViewModel : ViewModel() {
+@HiltViewModel
+class HomeViewModel @Inject constructor(private val fileWordsRepository: FileWordsRepository) :
+    ViewModel() {
 
-    var state by mutableStateOf(HomeState(text = "", files = FileWordsRepository.getFileNames()))
+    var state by mutableStateOf(HomeState(text = "", files = fileWordsRepository.getFileNames()))
         private set
 
     init {
         loadText()
+        state = state.copy(switchLanguages = fileWordsRepository.switchLanguages)
     }
 
     fun updateText(text: String) {
         state = state.copy(text = text)
-        FileWordsRepository.setMainText(text)
+        fileWordsRepository.setMainText(text)
     }
 
     fun onClickSwitchLanguages() {
         val newState = !state.switchLanguages
         state = state.copy(switchLanguages = newState)
-        FileWordsRepository.switchLanguages = newState
+        fileWordsRepository.switchLanguages = newState
     }
 
     fun updateSelectedFileName(fileName: String) {
-        FileWordsRepository.fileName = fileName
+        fileWordsRepository.fileName = fileName
     }
 
     fun importBackupFromFile(context: Context, uri: Uri) {
-        FileWordsRepository.importBackupFromFile(context, uri)
+        fileWordsRepository.importBackupFromFile(context, uri)
     }
 
     private fun loadText() {
-        updateText(FileWordsRepository.getMainText())
+        updateText(fileWordsRepository.getMainText())
     }
 }

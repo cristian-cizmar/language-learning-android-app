@@ -7,27 +7,28 @@ import android.net.Uri
 import androidx.core.text.isDigitsOnly
 import com.cristiancizmar.learnalanguage.domain.Word
 import com.cristiancizmar.learnalanguage.presentation.App
+import com.cristiancizmar.learnalanguage.utils.safeSubList
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import javax.inject.Singleton
 
-object FileWordsRepository {
+const val packageName = "com.cristiancizmar.learnalanguage"
 
-    var fileName = getFileNames().first()
+@Singleton
+class FileWordsRepository {
+
+    var fileName = getFileNames().firstOrNull()
     var switchLanguages = false
     private var prefs: SharedPreferences? = null
-    private const val packageName = "com.cristiancizmar.learnalanguage"
 
-    fun initPreferences(context: Context) {
-        prefs = context.getSharedPreferences(
-            packageName,
-            Context.MODE_PRIVATE
-        )
+    init {
+        initPreferences(App.appContext!!)
     }
 
     fun getWordsFromFile(): List<Word> {
         val content = try {
             val context = App.appContext ?: return emptyList()
-            val fileContent = context.assets.open(fileName)
+            val fileContent = context.assets.open(fileName!!)
                 .bufferedReader()
                 .use { it.readText() }
             "\n$fileContent\n"
@@ -64,7 +65,7 @@ object FileWordsRepository {
             word.attempts = word.correctGuesses + getWordCorrectness(word.index, false)
             word.difficulty = getWordDifficulty(word.index)
         }
-        return wordsList.subList(1, wordsList.size - 1)
+        return wordsList.safeSubList(1, wordsList.size - 1)
     }
 
     fun getFileNames(): List<String> {
@@ -109,6 +110,13 @@ object FileWordsRepository {
         val content = reader.use { it.readText() }
         inputStream?.close()
         importBackup(content)
+    }
+
+    private fun initPreferences(context: Context) {
+        prefs = context.getSharedPreferences(
+            packageName,
+            Context.MODE_PRIVATE
+        )
     }
 
     private fun importBackup(fileContent: String) {
