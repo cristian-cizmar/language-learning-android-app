@@ -12,3 +12,4 @@ Features:
 - Use your own word lists or choose from the preinstalled lists in the app
 - The notes feature helps you organize your language learning plan and remember important details
 - Import and export your data to ensure you never lose it
+- Use the Text to Speech feature to listen to the words you're learning
