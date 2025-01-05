@@ -1,6 +1,7 @@
 package com.cristiancizmar.learnalanguage.presentation.feature.practice
 
 import android.speech.tts.TextToSpeech
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -74,7 +75,8 @@ fun PracticeScreen(
                 Column(
                     modifier = Modifier
                         .weight(4f)
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .clickable { speak(tts, viewModel.state.original) },
                     verticalArrangement = Arrangement.Center
                 ) {
                     Text(
