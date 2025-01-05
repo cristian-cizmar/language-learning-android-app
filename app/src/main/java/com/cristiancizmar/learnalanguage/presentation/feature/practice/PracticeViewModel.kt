@@ -12,6 +12,7 @@ import com.cristiancizmar.learnalanguage.utils.safeSubList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -81,6 +82,15 @@ class PracticeViewModel @Inject constructor(
         }
         wrong++
         loadNextWord()
+    }
+
+    fun getFileLocale(): Locale {
+        return when {
+            fileWordsRepository.fileName?.contains("german") == true -> Locale.GERMANY
+            fileWordsRepository.fileName?.contains("french") == true -> Locale.FRANCE
+            fileWordsRepository.fileName?.contains("italian") == true -> Locale.ITALY
+            else -> Locale.US
+        }
     }
 
     private fun loadWordsAndInit() {
