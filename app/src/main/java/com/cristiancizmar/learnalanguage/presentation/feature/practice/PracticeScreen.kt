@@ -146,6 +146,10 @@ fun rememberTextToSpeech(locale: Locale): MutableState<TextToSpeech?> {
 }
 
 fun speak(tts: MutableState<TextToSpeech?>, text: String) {
-    val modifiedText = text.substringAfter('.').substringBefore(',')
+    val modifiedText = text
+        .substringAfter('.')
+        .substringBefore(',')
+        .substringBefore('/')
+        .substringBefore('(')
     tts.value?.speak(modifiedText, TextToSpeech.QUEUE_FLUSH, null, "")
 }
