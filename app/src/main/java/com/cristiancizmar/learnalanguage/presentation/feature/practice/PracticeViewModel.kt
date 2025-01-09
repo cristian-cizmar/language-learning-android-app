@@ -6,13 +6,12 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.cristiancizmar.learnalanguage.domain.Word
 import com.cristiancizmar.learnalanguage.data.FileWordsRepository
+import com.cristiancizmar.learnalanguage.domain.Word
 import com.cristiancizmar.learnalanguage.utils.safeSubList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.util.Locale
 import javax.inject.Inject
 
 @HiltViewModel
@@ -84,14 +83,7 @@ class PracticeViewModel @Inject constructor(
         loadNextWord()
     }
 
-    fun getFileLocale(): Locale {
-        return when {
-            fileWordsRepository.fileName?.contains("german") == true -> Locale.GERMANY
-            fileWordsRepository.fileName?.contains("french") == true -> Locale.FRANCE
-            fileWordsRepository.fileName?.contains("italian") == true -> Locale.ITALY
-            else -> Locale.US
-        }
-    }
+    fun getFileLocale() = fileWordsRepository.getFileLocale()
 
     private fun loadWordsAndInit() {
         allWords = fileWordsRepository.getWordsFromFile()

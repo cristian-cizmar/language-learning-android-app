@@ -4,8 +4,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.cristiancizmar.learnalanguage.domain.Word
 import com.cristiancizmar.learnalanguage.data.FileWordsRepository
+import com.cristiancizmar.learnalanguage.domain.Word
 import com.cristiancizmar.learnalanguage.utils.safeSubList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -104,6 +104,8 @@ class WordsViewModel @Inject constructor(private val fileWordsRepository: FileWo
 
         loadFile()
     }
+
+    fun getFileLocale() = fileWordsRepository.getFileLocale()
 
     private fun getWordsWithAllMeanings(): List<Word> {
         val words = fileWordsRepository.getWordsFromFile().toMutableList()

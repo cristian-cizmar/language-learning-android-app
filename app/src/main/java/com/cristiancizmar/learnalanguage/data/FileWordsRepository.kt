@@ -10,6 +10,7 @@ import com.cristiancizmar.learnalanguage.presentation.App
 import com.cristiancizmar.learnalanguage.utils.safeSubList
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.util.Locale
 import javax.inject.Singleton
 
 const val packageName = "com.cristiancizmar.learnalanguage"
@@ -110,6 +111,15 @@ class FileWordsRepository {
         val content = reader.use { it.readText() }
         inputStream?.close()
         importBackup(content)
+    }
+
+    fun getFileLocale(): Locale {
+        return when {
+            fileName?.contains("german") == true -> Locale.GERMANY
+            fileName?.contains("french") == true -> Locale.FRANCE
+            fileName?.contains("italian") == true -> Locale.ITALY
+            else -> Locale.US
+        }
     }
 
     private fun initPreferences(context: Context) {
