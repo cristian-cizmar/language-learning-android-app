@@ -15,6 +15,7 @@
     <string name="min_difficulty">Min difficulty: %s</string>
     <string name="min_words">Min Words</string>
     <string name="note_placeholder">write your notes here…</string>
+    <string name="note_word">your notes for this word…</string>
     <string name="original_short">ORIG</string>
     <string name="percentage_short">PERC</string>
     <string name="practice">Practice</string>

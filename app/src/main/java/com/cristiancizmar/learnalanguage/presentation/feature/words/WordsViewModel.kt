@@ -94,6 +94,16 @@ class WordsViewModel @Inject constructor(private val fileWordsRepository: FileWo
         loadFile()
     }
 
+    fun setWordNote(note: String) {
+        state = state.copy(
+            selectedWord = state.selectedWord?.copy(note = note)
+        )
+        state.selectedWord?.let { word ->
+            fileWordsRepository.setWordNote(word.index, note)
+        }
+        loadFile()
+    }
+
     fun updateSort(newSort: SORT) {
         if (sort == newSort) {
             sortAsc = !sortAsc
@@ -111,10 +121,10 @@ class WordsViewModel @Inject constructor(private val fileWordsRepository: FileWo
         val words = fileWordsRepository.getWordsFromFile().toMutableList()
         val finalList = words.map { it.copy() } // deep copy
 
-        words.forEachIndexed { index, firstWord ->
+        words.forEachIndexed { index, word ->
             val meanings = mutableListOf<String>()
             words.forEach { secondWord ->
-                if (firstWord.original == secondWord.original) {
+                if (word.original == secondWord.original) {
                     meanings.add(secondWord.translated)
                 }
             }

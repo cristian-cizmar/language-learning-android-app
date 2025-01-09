@@ -65,6 +65,7 @@ class FileWordsRepository {
             word.correctGuesses = getWordCorrectness(word.index, true)
             word.attempts = word.correctGuesses + getWordCorrectness(word.index, false)
             word.difficulty = getWordDifficulty(word.index)
+            word.note = getWordNote(word.index)
         }
         return wordsList.safeSubList(1, wordsList.size - 1)
     }
@@ -100,6 +101,13 @@ class FileWordsRepository {
         val prefId = "$packageName.$fileName.$wordId.difficulty"
         val editor = prefs!!.edit()
         editor.putInt(prefId, difficulty)
+        editor.apply()
+    }
+
+    fun setWordNote(wordId: Int, note: String) {
+        val prefId = "$packageName.$fileName.$wordId.note"
+        val editor = prefs!!.edit()
+        editor.putString(prefId, note)
         editor.apply()
     }
 
@@ -160,7 +168,11 @@ class FileWordsRepository {
                             editor.putInt("$packageName.$prefKey", intPrefValue)
                         }
                     } else {
-                        editor.putString("$packageName.mainText", prefValue)
+                        if (prefKey == "mainText") {
+                            editor.putString("$packageName.mainText", prefValue)
+                        } else if (prefKey.contains(".note")) {
+                            editor.putString("$packageName.$prefKey", prefValue)
+                        }
                     }
                 }
                 editor.apply()
@@ -176,4 +188,7 @@ class FileWordsRepository {
         val prefId = "$packageName.$fileName.$wordId.difficulty"
         return prefs!!.getInt(prefId, 1)
     }
+    
+    private fun getWordNote(wordId: Int) =
+        prefs!!.getString("$packageName.$fileName.$wordId.note", "") ?: ""
 }

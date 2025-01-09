@@ -14,7 +14,8 @@ data class Word(
     val translatedSentence: String = "",
     var correctGuesses: Int = 0,
     var attempts: Int = 0,
-    var difficulty: Int = 1
+    var difficulty: Int = 1,
+    var note: String = ""
 ) {
     fun guessesPercentage(): String {
         val num = if (attempts == 0) 0f

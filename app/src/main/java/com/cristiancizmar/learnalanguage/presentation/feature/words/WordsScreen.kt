@@ -38,7 +38,7 @@ fun WordsScreen(
     viewModel: WordsViewModel = hiltViewModel()
 ) {
     val tts = rememberTextToSpeech(viewModel.getFileLocale())
-    LaunchedEffect(viewModel.state.selectedWord) {
+    LaunchedEffect(viewModel.state.selectedWord?.original) {
         viewModel.state.selectedWord?.original?.let { text ->
             if (text.isNotBlank()) {
                 speak(tts, text)
@@ -142,6 +142,11 @@ fun WordsScreen(
                             viewModel.state.selectedWord?.difficulty.toString()
                         ),
                         onClick = { viewModel.updateWordDifficulty() }
+                    )
+                    BasicTextField(
+                        value = viewModel.state.selectedWord?.note.toString(),
+                        onValueChange = { viewModel.setWordNote(it) },
+                        label = stringResource(R.string.note_word)
                     )
                 }
             }
