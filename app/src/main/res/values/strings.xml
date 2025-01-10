@@ -10,7 +10,6 @@
     <string name="export_saved_data">Export saved data</string>
     <string name="import_saved_data">Import saved data</string>
     <string name="index_short">IDX</string>
-    <string name="lock_reminder">remember to lock your app</string>
     <string name="max_words">Max Words</string>
     <string name="min_difficulty">Min difficulty: %s</string>
     <string name="min_words">Min Words</string>

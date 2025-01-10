@@ -68,7 +68,7 @@ fun PracticeScreen(
                     modifier = Modifier
                         .padding(10.dp, 10.dp)
                         .fillMaxWidth(),
-                    text = stringResource(R.string.lock_reminder),
+                    text = viewModel.state.wordNote,
                     color = Color.White,
                     textAlign = TextAlign.End
                 )

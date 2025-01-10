@@ -56,7 +56,8 @@ class PracticeViewModel @Inject constructor(
 
     fun onClickShowAnswer() {
         state = state.copy(
-            showTranslation = true
+            showTranslation = true,
+            wordNote = currentWord.note
         )
 
         viewModelScope.launch {
@@ -103,7 +104,8 @@ class PracticeViewModel @Inject constructor(
                 translated = getAllMeaningsOfWord(currentWord),
                 showTranslation = false,
                 showCheckButtons = false,
-                details = getDetails()
+                details = getDetails(),
+                wordNote = ""
             )
         } else {
             state = state.copy(
@@ -111,7 +113,8 @@ class PracticeViewModel @Inject constructor(
                 showTranslation = false,
                 showCheckButtons = false,
                 details = getDetails(),
-                ended = true
+                ended = true,
+                wordNote = ""
             )
         }
     }

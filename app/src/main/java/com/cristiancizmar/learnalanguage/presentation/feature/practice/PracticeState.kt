@@ -6,5 +6,6 @@ data class PracticeState(
     val showTranslation: Boolean = false,
     val showCheckButtons: Boolean = false,
     val details: String = "",
-    val ended: Boolean = false
+    val ended: Boolean = false,
+    val wordNote: String = ""
 )
