@@ -38,7 +38,7 @@ class FileWordsRepository {
         }
         val words = content.split("\n")
         val wordsList = words
-            .map { it.split("\\s+".toRegex()).take(5).map { field -> field.replace("_", " ") } }
+            .map { it.split("\t".toRegex()).take(5) }
             .map {
                 val w = if (it.size == 5) {
                     Word(
