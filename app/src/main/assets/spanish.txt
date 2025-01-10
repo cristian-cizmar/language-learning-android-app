@@ -1,5 +1,0 @@
-1	manzana	apple
-2	adiós	goodbye
-3	buenos_días	good_morning
-4	gracias	thanks
-5	hola	hello
