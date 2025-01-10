@@ -30,7 +30,7 @@ class HomeViewModelTest {
 
         viewModel.updateText(newText)
 
-        Assert.assertEquals(newText, viewModel.state.text)
+        Assert.assertEquals(newText, viewModel.state.notesText)
     }
 
     @Test

@@ -1,6 +1,6 @@
 <resources>
     <string name="all">all</string>
-    <string name="app_name">Learn a Language</string>
+    <string name="app_name">Learning</string>
     <string name="attempts_short">ATT</string>
     <string name="click_for_answer">click for answer</string>
     <string name="continue_text">Continue</string>

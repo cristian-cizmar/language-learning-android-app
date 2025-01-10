@@ -53,7 +53,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 TextField(
-                    value = viewModel.state.text,
+                    value = viewModel.state.notesText,
                     onValueChange = { viewModel.updateText(it) },
                     colors = TextFieldDefaults.textFieldColors(
                         textColor = Color.White,

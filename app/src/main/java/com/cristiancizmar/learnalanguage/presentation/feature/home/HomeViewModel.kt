@@ -14,16 +14,16 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(private val fileWordsRepository: FileWordsRepository) :
     ViewModel() {
 
-    var state by mutableStateOf(HomeState(text = "", files = fileWordsRepository.getFileNames()))
+    var state by mutableStateOf(HomeState(notesText = "", files = fileWordsRepository.getFileNames()))
         private set
 
     init {
-        loadText()
+        loadNotesText()
         state = state.copy(switchLanguages = fileWordsRepository.switchLanguages)
     }
 
     fun updateText(text: String) {
-        state = state.copy(text = text)
+        state = state.copy(notesText = text)
         fileWordsRepository.setMainText(text)
     }
 
@@ -39,9 +39,10 @@ class HomeViewModel @Inject constructor(private val fileWordsRepository: FileWor
 
     fun importBackupFromFile(context: Context, uri: Uri) {
         fileWordsRepository.importBackupFromFile(context, uri)
+        loadNotesText()
     }
 
-    private fun loadText() {
+    private fun loadNotesText() {
         updateText(fileWordsRepository.getMainText())
     }
 }
