@@ -14,7 +14,19 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(private val fileWordsRepository: FileWordsRepository) :
     ViewModel() {
 
-    var state by mutableStateOf(HomeState(notesText = "", files = fileWordsRepository.getFileNames()))
+    sealed class HomeEvent {
+        data class ImportBackupFromFile(val context: Context, val uri: Uri) : HomeEvent()
+        data class UpdateNotesText(val note: String) : HomeEvent()
+        data class UpdateSelectedFileName(val fileName: String) : HomeEvent()
+        data object SwitchLanguages : HomeEvent()
+    }
+
+    var state by mutableStateOf(
+        HomeState(
+            notesText = "",
+            files = fileWordsRepository.getFileNames()
+        )
+    )
         private set
 
     init {
@@ -22,27 +34,47 @@ class HomeViewModel @Inject constructor(private val fileWordsRepository: FileWor
         state = state.copy(switchLanguages = fileWordsRepository.switchLanguages)
     }
 
-    fun updateText(text: String) {
-        state = state.copy(notesText = text)
-        fileWordsRepository.setMainText(text)
+    fun onAction(homeEvent: HomeEvent) {
+        when(homeEvent) {
+            is HomeEvent.ImportBackupFromFile -> {
+                importBackupFromFile(homeEvent.context, homeEvent.uri)
+            }
+
+            is HomeEvent.UpdateNotesText -> {
+                updateNotesText(homeEvent.note)
+            }
+
+            is HomeEvent.UpdateSelectedFileName -> {
+                updateSelectedFileName(homeEvent.fileName)
+            }
+
+            HomeEvent.SwitchLanguages -> {
+                switchLanguages()
+            }
+        }
     }
 
-    fun onClickSwitchLanguages() {
+    private fun switchLanguages() {
         val newState = !state.switchLanguages
         state = state.copy(switchLanguages = newState)
         fileWordsRepository.switchLanguages = newState
     }
 
-    fun updateSelectedFileName(fileName: String) {
+    private fun updateSelectedFileName(fileName: String) {
         fileWordsRepository.fileName = fileName
     }
 
-    fun importBackupFromFile(context: Context, uri: Uri) {
+    private fun importBackupFromFile(context: Context, uri: Uri) {
         fileWordsRepository.importBackupFromFile(context, uri)
         loadNotesText()
     }
 
     private fun loadNotesText() {
-        updateText(fileWordsRepository.getMainText())
+        updateNotesText(fileWordsRepository.getMainText())
+    }
+
+    private fun updateNotesText(text: String) {
+        state = state.copy(notesText = text)
+        fileWordsRepository.setMainText(text)
     }
 }

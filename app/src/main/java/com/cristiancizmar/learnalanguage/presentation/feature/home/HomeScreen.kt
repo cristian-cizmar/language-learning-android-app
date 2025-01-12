@@ -37,7 +37,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
         contract = ActivityResultContracts.OpenDocument(),
         onResult = { uri ->
             if (uri != null) {
-                viewModel.importBackupFromFile(ctx, uri)
+                viewModel.onAction(HomeViewModel.HomeEvent.ImportBackupFromFile(ctx, uri))
             }
         }
     )
@@ -54,7 +54,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
             ) {
                 TextField(
                     value = viewModel.state.notesText,
-                    onValueChange = { viewModel.updateText(it) },
+                    onValueChange = { viewModel.onAction(HomeViewModel.HomeEvent.UpdateNotesText(it)) },
                     colors = TextFieldDefaults.textFieldColors(
                         textColor = Color.White,
                         backgroundColor = Color.Black,
@@ -80,13 +80,19 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
                         R.string.switch_languages,
                         viewModel.state.switchLanguages.toString()
                     ),
-                    onClick = { viewModel.onClickSwitchLanguages() },
+                    onClick = { viewModel.onAction(HomeViewModel.HomeEvent.SwitchLanguages) },
                     modifier = Modifier.padding(top = 15.dp)
                 )
                 viewModel.state.files.forEach { file ->
                     ScreenSelectionButton(
                         text = file,
-                        onClick = { viewModel.updateSelectedFileName(file) }
+                        onClick = {
+                            viewModel.onAction(
+                                HomeViewModel.HomeEvent.UpdateSelectedFileName(
+                                    file
+                                )
+                            )
+                        }
                     )
                 }
 

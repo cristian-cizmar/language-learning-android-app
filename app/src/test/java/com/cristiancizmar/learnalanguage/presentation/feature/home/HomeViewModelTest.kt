@@ -25,17 +25,17 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun updateText_anyText_textUpdated() {
+    fun updateNotesText_anyText_textUpdated() {
         val newText = "new text"
 
-        viewModel.updateText(newText)
+        viewModel.onAction(HomeViewModel.HomeEvent.UpdateNotesText(newText))
 
         Assert.assertEquals(newText, viewModel.state.notesText)
     }
 
     @Test
-    fun onClickSwitchLanguages_isFalse_becomesTrue() {
-        viewModel.onClickSwitchLanguages()
+    fun switchLanguages_isFalse_becomesTrue() {
+        viewModel.onAction(HomeViewModel.HomeEvent.SwitchLanguages)
 
         Assert.assertTrue(viewModel.state.switchLanguages)
     }
