@@ -20,6 +20,7 @@ class HomeViewModelTest {
         Mockito.`when`(fileWordsRepository.getFileNames()).thenReturn(emptyList())
         Mockito.`when`(fileWordsRepository.getMainText()).thenReturn("")
         Mockito.`when`(fileWordsRepository.switchLanguages).thenReturn(false)
+        Mockito.`when`(fileWordsRepository.getFavoriteFileName()).thenReturn("")
 
         viewModel = HomeViewModel(fileWordsRepository)
     }
