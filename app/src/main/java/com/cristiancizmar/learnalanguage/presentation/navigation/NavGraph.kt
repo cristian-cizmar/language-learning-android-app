@@ -12,10 +12,10 @@ import com.cristiancizmar.learnalanguage.presentation.feature.setuppractice.Setu
 import com.cristiancizmar.learnalanguage.presentation.feature.words.WordsScreen
 
 sealed class Screen(val route: String) {
-    object Home : Screen(route = "Home")
-    object Words : Screen(route = "Words")
-    object SetupPractice : Screen(route = "SetupPractice")
-    object Practice :
+    data object Home : Screen(route = "Home")
+    data object Words : Screen(route = "Words")
+    data object SetupPractice : Screen(route = "SetupPractice")
+    data object Practice :
         Screen(route = "Practice/{minWords}&{maxWords}&{answerDelay}&{saveResults}&{difficulty}")
 }
 
@@ -30,7 +30,7 @@ fun SetupNavGraph(navHostController: NavHostController) {
         composable(
             route = Screen.Words.route
         ) {
-            WordsScreen()
+            WordsScreen(navController = navHostController)
         }
         composable(
             route = Screen.SetupPractice.route
@@ -46,13 +46,9 @@ fun SetupNavGraph(navHostController: NavHostController) {
                 navArgument("saveResults") { type = NavType.BoolType },
                 navArgument("difficulty") { type = NavType.IntType },
             )
-        ) { backStackEntry ->
+        ) {
             PracticeScreen(
-                minWords = backStackEntry.arguments!!.getInt("minWords"),
-                maxWords = backStackEntry.arguments!!.getInt("maxWords"),
-                answerDelay = backStackEntry.arguments!!.getInt("answerDelay"),
-                saveResults = backStackEntry.arguments!!.getBoolean("saveResults"),
-                minDifficulty = backStackEntry.arguments!!.getInt("difficulty")
+                navController = navHostController
             )
         }
     }

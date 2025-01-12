@@ -1,5 +1,6 @@
 package com.cristiancizmar.learnalanguage.presentation.feature.practice
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.AlertDialog
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -18,26 +20,21 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.cristiancizmar.learnalanguage.R
 import com.cristiancizmar.learnalanguage.presentation.common.SelectionButton
+import com.cristiancizmar.learnalanguage.presentation.common.SimpleButton
 import com.cristiancizmar.learnalanguage.presentation.common.rememberTextToSpeech
 import com.cristiancizmar.learnalanguage.presentation.common.speak
 import com.cristiancizmar.learnalanguage.presentation.theme.LearnALanguageTheme
 import kotlinx.coroutines.delay
 
-@Preview
 @Composable
 fun PracticeScreen(
-    modifier: Modifier = Modifier,
-    viewModel: PracticeViewModel = hiltViewModel(),
-    minWords: Int? = null,
-    maxWords: Int? = null,
-    answerDelay: Int? = 500,
-    saveResults: Boolean = false,
-    minDifficulty: Int = 1
+    navController: NavController,
+    viewModel: PracticeViewModel = hiltViewModel()
 ) {
     val tts = rememberTextToSpeech(viewModel.getFileLocale())
     LaunchedEffect(Unit) {
@@ -47,7 +44,9 @@ fun PracticeScreen(
     LaunchedEffect(viewModel.state.original) {
         speak(tts, viewModel.state.original)
     }
-
+    BackHandler {
+        viewModel.onAction(PracticeViewModel.PracticeEvent.ShowQuitConfirmationDialog)
+    }
     LearnALanguageTheme {
         Surface(color = Color.Black) {
             Column(
@@ -120,6 +119,27 @@ fun PracticeScreen(
                         )
                     }
                 }
+            }
+
+            if (viewModel.state.showConfirmDialog) {
+                AlertDialog(
+                    onDismissRequest = {
+                        viewModel.onAction(PracticeViewModel.PracticeEvent.CancelQuitDialog)
+                    },
+                    title = { Text(text = "Are you sure you want to quit?") },
+                    confirmButton = {
+                        SimpleButton(text = "Yes", modifier = Modifier.padding(20.dp)) {
+                            if (navController.previousBackStackEntry != null) {
+                                navController.popBackStack()
+                            }
+                        }
+                    },
+                    dismissButton = {
+                        SimpleButton(text = "No", modifier = Modifier.padding(20.dp)) {
+                            viewModel.onAction(PracticeViewModel.PracticeEvent.CancelQuitDialog)
+                        }
+                    }
+                )
             }
         }
     }

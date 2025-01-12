@@ -7,5 +7,6 @@ data class PracticeState(
     val showCheckButtons: Boolean = false,
     val details: String = "",
     val ended: Boolean = false,
-    val wordNote: String = ""
+    val wordNote: String = "",
+    val showConfirmDialog: Boolean = false
 )

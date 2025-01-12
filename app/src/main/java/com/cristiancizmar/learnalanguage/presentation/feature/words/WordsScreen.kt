@@ -1,5 +1,6 @@
 package com.cristiancizmar.learnalanguage.presentation.feature.words
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,9 +20,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
 import com.cristiancizmar.learnalanguage.R
 import com.cristiancizmar.learnalanguage.presentation.common.BasicTextField
 import com.cristiancizmar.learnalanguage.presentation.common.SelectionButton
@@ -31,10 +32,9 @@ import com.cristiancizmar.learnalanguage.presentation.common.rememberTextToSpeec
 import com.cristiancizmar.learnalanguage.presentation.common.speak
 import com.cristiancizmar.learnalanguage.presentation.theme.LearnALanguageTheme
 
-@Preview
 @Composable
 fun WordsScreen(
-    modifier: Modifier = Modifier,
+    navController: NavController,
     viewModel: WordsViewModel = hiltViewModel()
 ) {
     val tts = rememberTextToSpeech(viewModel.getFileLocale())
@@ -43,6 +43,13 @@ fun WordsScreen(
             if (text.isNotBlank()) {
                 speak(tts, text)
             }
+        }
+    }
+    BackHandler {
+        if (viewModel.state.selectedWord != null) {
+            viewModel.onAction(WordsViewModel.WordsEvent.RemoveSelectedWord)
+        } else if (navController.previousBackStackEntry != null) {
+            navController.popBackStack()
         }
     }
     LearnALanguageTheme {

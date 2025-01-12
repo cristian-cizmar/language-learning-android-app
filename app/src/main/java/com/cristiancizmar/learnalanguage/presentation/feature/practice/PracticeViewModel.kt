@@ -24,6 +24,8 @@ class PracticeViewModel @Inject constructor(
         data object ShowAnswer : PracticeEvent()
         data object ClickCorrect : PracticeEvent()
         data object ClickWrong : PracticeEvent()
+        data object ShowQuitConfirmationDialog : PracticeEvent()
+        data object CancelQuitDialog : PracticeEvent()
     }
 
     private var minWords = 0
@@ -61,15 +63,25 @@ class PracticeViewModel @Inject constructor(
     }
 
     fun onAction(practiceEvent: PracticeEvent) {
-        when(practiceEvent) {
+        when (practiceEvent) {
             PracticeEvent.ShowAnswer -> {
                 onClickShowAnswer()
             }
+
             PracticeEvent.ClickCorrect -> {
                 onClickCorrect()
             }
+
             PracticeEvent.ClickWrong -> {
                 onClickWrong()
+            }
+
+            PracticeEvent.ShowQuitConfirmationDialog -> {
+                showQuitConfirmationDialog()
+            }
+
+            PracticeEvent.CancelQuitDialog -> {
+                hideQuitConfirmationDialog()
             }
         }
     }
@@ -156,5 +168,17 @@ class PracticeViewModel @Inject constructor(
 
     private fun getDetails() =
         "delay=$answerDelay save=$saveResults, min=$minWords, max=$maxWords, remaining=${remainingWords.size}, $correct/${correct + wrong}, ${percentage()}, diff=${currentWord.difficulty}"
+
+    private fun showQuitConfirmationDialog() {
+        state = state.copy(
+            showConfirmDialog = true
+        )
+    }
+
+    private fun hideQuitConfirmationDialog() {
+        state = state.copy(
+            showConfirmDialog = false
+        )
+    }
 
 }
