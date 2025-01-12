@@ -7,6 +7,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -16,12 +17,16 @@ fun SelectionButton(
     modifier: Modifier = Modifier,
     paddingHorizontal: Int = 0,
     paddingVertical: Int = 0,
-) {
+    borderColor: Color = Color.White,
+    mainPaddingHorizontal: Dp = 10.dp,
+    mainPaddingVertical: Dp = 10.dp,
+
+    ) {
     OutlinedButton(
         onClick = { onClick.invoke() },
         Modifier
-            .padding(10.dp, 10.dp),
-        border = BorderStroke(2.dp, Color.White),
+            .padding(mainPaddingHorizontal, mainPaddingVertical),
+        border = BorderStroke(2.dp, borderColor),
         colors = ButtonDefaults.buttonColors(backgroundColor = Color.Black)
     ) {
         Text(

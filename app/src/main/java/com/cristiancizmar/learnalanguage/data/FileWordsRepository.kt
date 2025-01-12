@@ -24,6 +24,7 @@ class FileWordsRepository {
 
     init {
         initPreferences(App.appContext!!)
+        initFavoriteFile()
     }
 
     fun getWordsFromFile(): List<Word> {
@@ -111,6 +112,14 @@ class FileWordsRepository {
         editor.apply()
     }
 
+    fun setFavoriteFileName(fileName: String) {
+        val editor = prefs!!.edit()
+        editor.putString("$packageName.favoriteFileName", fileName)
+        editor.apply()
+    }
+
+    fun getFavoriteFileName() = prefs!!.getString("$packageName.favoriteFileName", "") ?: ""
+
     fun getAllData() = prefs?.all.toString()
 
     fun importBackupFromFile(context: Context, uri: Uri) {
@@ -135,6 +144,14 @@ class FileWordsRepository {
             packageName,
             Context.MODE_PRIVATE
         )
+    }
+
+    private fun initFavoriteFile() {
+        getFavoriteFileName().let { favoriteFile ->
+            if (getFileNames().contains(favoriteFile)) {
+                fileName = favoriteFile
+            }
+        }
     }
 
     private fun importBackup(fileContent: String) {
@@ -170,6 +187,8 @@ class FileWordsRepository {
                     } else {
                         if (prefKey == "mainText") {
                             editor.putString("$packageName.mainText", prefValue)
+                        } else if (prefKey == "favoriteFileName") {
+                            editor.putString("$packageName.favoriteFileName", prefValue)
                         } else if (prefKey.contains(".note")) {
                             editor.putString("$packageName.$prefKey", prefValue)
                         }
@@ -188,7 +207,7 @@ class FileWordsRepository {
         val prefId = "$packageName.$fileName.$wordId.difficulty"
         return prefs!!.getInt(prefId, 1)
     }
-    
+
     private fun getWordNote(wordId: Int) =
         prefs!!.getString("$packageName.$fileName.$wordId.note", "") ?: ""
 }

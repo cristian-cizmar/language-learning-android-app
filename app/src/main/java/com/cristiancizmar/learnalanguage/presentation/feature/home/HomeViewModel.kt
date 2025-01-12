@@ -18,6 +18,7 @@ class HomeViewModel @Inject constructor(private val fileWordsRepository: FileWor
         data class ImportBackupFromFile(val context: Context, val uri: Uri) : HomeEvent()
         data class UpdateNotesText(val note: String) : HomeEvent()
         data class UpdateSelectedFileName(val fileName: String) : HomeEvent()
+        data class UpdateFavoriteFileName(val fileName: String) : HomeEvent()
         data object SwitchLanguages : HomeEvent()
     }
 
@@ -31,11 +32,15 @@ class HomeViewModel @Inject constructor(private val fileWordsRepository: FileWor
 
     init {
         loadNotesText()
-        state = state.copy(switchLanguages = fileWordsRepository.switchLanguages)
+        state = state.copy(
+            switchLanguages = fileWordsRepository.switchLanguages,
+            selectedFileName = fileWordsRepository.fileName.orEmpty(),
+            favoriteFileName = getFavoriteFileName()
+        )
     }
 
     fun onAction(homeEvent: HomeEvent) {
-        when(homeEvent) {
+        when (homeEvent) {
             is HomeEvent.ImportBackupFromFile -> {
                 importBackupFromFile(homeEvent.context, homeEvent.uri)
             }
@@ -48,9 +53,14 @@ class HomeViewModel @Inject constructor(private val fileWordsRepository: FileWor
                 updateSelectedFileName(homeEvent.fileName)
             }
 
+            is HomeEvent.UpdateFavoriteFileName -> {
+                updateFavoriteFileName(homeEvent.fileName)
+            }
+
             HomeEvent.SwitchLanguages -> {
                 switchLanguages()
             }
+
         }
     }
 
@@ -62,7 +72,19 @@ class HomeViewModel @Inject constructor(private val fileWordsRepository: FileWor
 
     private fun updateSelectedFileName(fileName: String) {
         fileWordsRepository.fileName = fileName
+        state = state.copy(
+            selectedFileName = fileName
+        )
     }
+
+    private fun updateFavoriteFileName(fileName: String) {
+        fileWordsRepository.setFavoriteFileName(fileName)
+        state = state.copy(
+            favoriteFileName = fileName
+        )
+    }
+
+    private fun getFavoriteFileName() = fileWordsRepository.getFavoriteFileName()
 
     private fun importBackupFromFile(context: Context, uri: Uri) {
         fileWordsRepository.importBackupFromFile(context, uri)
