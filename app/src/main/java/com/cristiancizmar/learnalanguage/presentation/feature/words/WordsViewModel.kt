@@ -17,6 +17,17 @@ const val DEFAULT_MAX_WORDS = 5000
 class WordsViewModel @Inject constructor(private val fileWordsRepository: FileWordsRepository) :
     ViewModel() {
 
+    sealed class WordsEvent {
+        data class SetMinWords(val words: Int?) : WordsEvent()
+        data class SetMaxWords(val words: Int?) : WordsEvent()
+        data class UpdateSort(val sort: SORT) : WordsEvent()
+        data class SetSelectedWord(val word: Word) : WordsEvent()
+        data class UpdateSearch(val search: String) : WordsEvent()
+        data class SetWordNote(val note: String) : WordsEvent()
+        data object RemoveSelectedWord : WordsEvent()
+        data object UpdateWordDifficulty : WordsEvent()
+    }
+
     enum class SORT { IDX, ATT, PERC, DIFF, ORIG }
 
     var state by mutableStateOf(WordsState())
@@ -30,7 +41,38 @@ class WordsViewModel @Inject constructor(private val fileWordsRepository: FileWo
         loadFile()
     }
 
-    fun updateSearch(searchText: String) {
+    fun onAction(event: WordsEvent) {
+        when(event) {
+            is WordsEvent.SetMinWords -> {
+                setMinWords(event.words)
+            }
+            is WordsEvent.SetMaxWords -> {
+                setMaxWords(event.words)
+            }
+            is WordsEvent.UpdateSort -> {
+                updateSort(event.sort)
+            }
+            is WordsEvent.SetSelectedWord -> {
+                setSelectedWord(event.word)
+            }
+            is WordsEvent.UpdateSearch -> {
+                updateSearch(event.search)
+            }
+            is WordsEvent.SetWordNote -> {
+                setWordNote(event.note)
+            }
+            WordsEvent.RemoveSelectedWord -> {
+                removeSelectedWord()
+            }
+            WordsEvent.UpdateWordDifficulty -> {
+                updateWordDifficulty()
+            }
+        }
+    }
+
+    fun getFileLocale() = fileWordsRepository.getFileLocale()
+
+    private fun updateSearch(searchText: String) {
         val text = searchText.lowercase()
         if (text.isNotBlank()) {
             val searchResults = mutableListOf<Word>()
@@ -53,33 +95,33 @@ class WordsViewModel @Inject constructor(private val fileWordsRepository: FileWo
         }
     }
 
-    fun setSelectedWord(word: Word) {
+    private fun setSelectedWord(word: Word) {
         state = state.copy(
             selectedWord = word
         )
     }
 
-    fun removeSelectedWord() {
+    private fun removeSelectedWord() {
         state = state.copy(
             selectedWord = null
         )
     }
 
-    fun setMinWords(min: String) {
+    private fun setMinWords(min: Int?) {
         state = state.copy(
-            minWords = min.toIntOrNull()
+            minWords = min
         )
         loadFile()
     }
 
-    fun setMaxWords(max: String) {
+    private fun setMaxWords(max: Int?) {
         state = state.copy(
-            maxWords = max.toIntOrNull()
+            maxWords = max
         )
         loadFile()
     }
 
-    fun updateWordDifficulty() {
+    private fun updateWordDifficulty() {
         var newDifficulty = state.selectedWord?.difficulty ?: 1
         newDifficulty++
         if (newDifficulty == 5) newDifficulty = 1
@@ -94,7 +136,7 @@ class WordsViewModel @Inject constructor(private val fileWordsRepository: FileWo
         loadFile()
     }
 
-    fun setWordNote(note: String) {
+    private fun setWordNote(note: String) {
         state = state.copy(
             selectedWord = state.selectedWord?.copy(note = note)
         )
@@ -104,7 +146,7 @@ class WordsViewModel @Inject constructor(private val fileWordsRepository: FileWo
         loadFile()
     }
 
-    fun updateSort(newSort: SORT) {
+    private fun updateSort(newSort: SORT) {
         if (sort == newSort) {
             sortAsc = !sortAsc
         } else {
@@ -114,8 +156,6 @@ class WordsViewModel @Inject constructor(private val fileWordsRepository: FileWo
 
         loadFile()
     }
-
-    fun getFileLocale() = fileWordsRepository.getFileLocale()
 
     private fun getWordsWithAllMeanings(): List<Word> {
         val words = fileWordsRepository.getWordsFromFile().toMutableList()

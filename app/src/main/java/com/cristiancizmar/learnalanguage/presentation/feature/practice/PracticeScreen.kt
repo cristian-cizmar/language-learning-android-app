@@ -95,7 +95,7 @@ fun PracticeScreen(
                         } else {
                             stringResource(R.string.click_for_answer)
                         },
-                        onClick = { viewModel.onClickShowAnswer() },
+                        onClick = { viewModel.onAction(PracticeViewModel.PracticeEvent.ShowAnswer) },
                         paddingHorizontal = 20,
                         paddingVertical = 10
                     )
@@ -108,13 +108,13 @@ fun PracticeScreen(
                     ) {
                         SelectionButton(
                             text = stringResource(R.string.wrong),
-                            onClick = { viewModel.onClickWrong() },
+                            onClick = { viewModel.onAction(PracticeViewModel.PracticeEvent.ClickWrong) },
                             paddingHorizontal = 20,
                             paddingVertical = 10
                         )
                         SelectionButton(
                             text = stringResource(R.string.correct),
-                            onClick = { viewModel.onClickCorrect() },
+                            onClick = { viewModel.onAction(PracticeViewModel.PracticeEvent.ClickCorrect) },
                             paddingHorizontal = 20,
                             paddingVertical = 10
                         )

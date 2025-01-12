@@ -20,6 +20,12 @@ class PracticeViewModel @Inject constructor(
     private val fileWordsRepository: FileWordsRepository
 ) : ViewModel() {
 
+    sealed class PracticeEvent {
+        data object ShowAnswer : PracticeEvent()
+        data object ClickCorrect : PracticeEvent()
+        data object ClickWrong : PracticeEvent()
+    }
+
     private var minWords = 0
     private var maxWords = 0
     private var answerDelay = 500
@@ -54,7 +60,23 @@ class PracticeViewModel @Inject constructor(
         loadWordsAndInit()
     }
 
-    fun onClickShowAnswer() {
+    fun onAction(practiceEvent: PracticeEvent) {
+        when(practiceEvent) {
+            PracticeEvent.ShowAnswer -> {
+                onClickShowAnswer()
+            }
+            PracticeEvent.ClickCorrect -> {
+                onClickCorrect()
+            }
+            PracticeEvent.ClickWrong -> {
+                onClickWrong()
+            }
+        }
+    }
+
+    fun getFileLocale() = fileWordsRepository.getFileLocale()
+
+    private fun onClickShowAnswer() {
         state = state.copy(
             showTranslation = true,
             wordNote = currentWord.note
@@ -68,7 +90,7 @@ class PracticeViewModel @Inject constructor(
         }
     }
 
-    fun onClickCorrect() {
+    private fun onClickCorrect() {
         if (saveResults) {
             fileWordsRepository.setWordCorrectness(currentWord.index, true)
         }
@@ -76,15 +98,13 @@ class PracticeViewModel @Inject constructor(
         loadNextWord()
     }
 
-    fun onClickWrong() {
+    private fun onClickWrong() {
         if (saveResults) {
             fileWordsRepository.setWordCorrectness(currentWord.index, false)
         }
         wrong++
         loadNextWord()
     }
-
-    fun getFileLocale() = fileWordsRepository.getFileLocale()
 
     private fun loadWordsAndInit() {
         allWords = fileWordsRepository.getWordsFromFile()

@@ -59,13 +59,13 @@ fun WordsScreen(
                     BasicTextField(
                         modifier = Modifier.requiredWidth(100.dp),
                         value = viewModel.state.minWords?.toString() ?: "",
-                        onValueChange = { viewModel.setMinWords(it) },
+                        onValueChange = { viewModel.onAction(WordsViewModel.WordsEvent.SetMinWords(it.toIntOrNull())) },
                         label = stringResource(R.string.min_words)
                     )
                     BasicTextField(
                         modifier = Modifier.requiredWidth(100.dp),
                         value = viewModel.state.maxWords?.toString() ?: "",
-                        onValueChange = { viewModel.setMaxWords(it) },
+                        onValueChange = { viewModel.onAction(WordsViewModel.WordsEvent.SetMaxWords(it.toIntOrNull())) },
                         label = stringResource(R.string.max_words)
                     )
                 }
@@ -75,19 +75,19 @@ fun WordsScreen(
                 ) {
                     SimpleButton(
                         text = stringResource(R.string.index_short),
-                        onClick = { viewModel.updateSort(WordsViewModel.SORT.IDX) })
+                        onClick = { viewModel.onAction(WordsViewModel.WordsEvent.UpdateSort(WordsViewModel.SORT.IDX)) })
                     SimpleButton(
                         text = stringResource(R.string.original_short),
-                        onClick = { viewModel.updateSort(WordsViewModel.SORT.ORIG) })
+                        onClick = { viewModel.onAction(WordsViewModel.WordsEvent.UpdateSort(WordsViewModel.SORT.ORIG)) })
                     SimpleButton(
                         text = stringResource(R.string.attempts_short),
-                        onClick = { viewModel.updateSort(WordsViewModel.SORT.ATT) })
+                        onClick = { viewModel.onAction(WordsViewModel.WordsEvent.UpdateSort(WordsViewModel.SORT.ATT)) })
                     SimpleButton(
                         text = stringResource(R.string.percentage_short),
-                        onClick = { viewModel.updateSort(WordsViewModel.SORT.PERC) })
+                        onClick = { viewModel.onAction(WordsViewModel.WordsEvent.UpdateSort(WordsViewModel.SORT.PERC)) })
                     SimpleButton(
                         text = stringResource(R.string.difficulty_short),
-                        onClick = { viewModel.updateSort(WordsViewModel.SORT.DIFF) })
+                        onClick = { viewModel.onAction(WordsViewModel.WordsEvent.UpdateSort(WordsViewModel.SORT.DIFF)) })
                 }
                 LazyColumn(
                     modifier = Modifier.fillMaxHeight(0.5f),
@@ -100,7 +100,7 @@ fun WordsScreen(
                     ) { index, word ->
                         WordRow(
                             word = word,
-                            onClick = { viewModel.setSelectedWord(word) },
+                            onClick = { viewModel.onAction(WordsViewModel.WordsEvent.SetSelectedWord(word)) },
                             index = if (viewModel.state.customSorting) index + 1 else -1
                         )
                     }
@@ -119,7 +119,7 @@ fun WordsScreen(
                 }
                 BasicTextField(
                     value = viewModel.state.searchText,
-                    onValueChange = { viewModel.updateSearch(it) },
+                    onValueChange = { viewModel.onAction(WordsViewModel.WordsEvent.UpdateSearch(it)) },
                     label = stringResource(R.string.search)
                 )
             }
@@ -127,7 +127,7 @@ fun WordsScreen(
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .clickable { viewModel.removeSelectedWord() }
+                        .clickable { viewModel.onAction(WordsViewModel.WordsEvent.RemoveSelectedWord) }
                         .background(Color(0, 0, 0, 200)),
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -141,11 +141,11 @@ fun WordsScreen(
                             R.string.difficulty_specify,
                             viewModel.state.selectedWord?.difficulty.toString()
                         ),
-                        onClick = { viewModel.updateWordDifficulty() }
+                        onClick = { viewModel.onAction(WordsViewModel.WordsEvent.UpdateWordDifficulty) }
                     )
                     BasicTextField(
                         value = viewModel.state.selectedWord?.note.toString(),
-                        onValueChange = { viewModel.setWordNote(it) },
+                        onValueChange = { viewModel.onAction(WordsViewModel.WordsEvent.SetWordNote(it)) },
                         label = stringResource(R.string.note_word)
                     )
                 }

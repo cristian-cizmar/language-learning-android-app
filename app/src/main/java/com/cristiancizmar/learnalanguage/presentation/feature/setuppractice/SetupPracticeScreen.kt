@@ -29,17 +29,17 @@ fun SetupPracticeScreen(
             ) {
                 BasicTextField(
                     value = viewModel.state.minWords?.toString() ?: "",
-                    onValueChange = { viewModel.updateMin(it.toIntOrNull()) },
+                    onValueChange = { viewModel.onAction(SetupPracticeViewModel.SetupPracticeEvent.UpdateMinIndex(it.toIntOrNull())) },
                     label = stringResource(R.string.min_words)
                 )
                 BasicTextField(
                     value = viewModel.state.maxWords?.toString() ?: "",
-                    onValueChange = { viewModel.updateMax(it.toIntOrNull()) },
+                    onValueChange = { viewModel.onAction(SetupPracticeViewModel.SetupPracticeEvent.UpdateMaxIndex(it.toIntOrNull())) },
                     label = stringResource(R.string.max_words)
                 )
                 BasicTextField(
                     value = viewModel.state.answerDelay?.toString() ?: "",
-                    onValueChange = { viewModel.updateAnswerDelay(it.toIntOrNull()) },
+                    onValueChange = { viewModel.onAction(SetupPracticeViewModel.SetupPracticeEvent.UpdateAnswerDelay(it.toIntOrNull())) },
                     label = stringResource(R.string.transaltion_delay)
                 )
                 SelectionButton(
@@ -47,7 +47,7 @@ fun SetupPracticeScreen(
                         R.string.save_results,
                         viewModel.state.saveResults.toString()
                     ),
-                    onClick = { viewModel.updateSaveResults(!viewModel.state.saveResults) }
+                    onClick = { viewModel.onAction(SetupPracticeViewModel.SetupPracticeEvent.UpdateSaveResults) }
                 )
                 SelectionButton(
                     text = stringResource(
@@ -58,7 +58,7 @@ fun SetupPracticeScreen(
                             viewModel.state.difficulty.toString()
                         }
                     ),
-                    onClick = { viewModel.updateDifficulty() }
+                    onClick = { viewModel.onAction(SetupPracticeViewModel.SetupPracticeEvent.UpdateDifficulty) }
                 )
                 SelectionButton(
                     text = stringResource(R.string.continue_text),
