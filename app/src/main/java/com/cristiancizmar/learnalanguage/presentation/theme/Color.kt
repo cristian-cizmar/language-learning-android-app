@@ -10,3 +10,5 @@ val Teal200 = Color(0xFF03DAC5)
 val BlueDer = Color(0xFF000287)
 val RedDie = Color(0xFF870044)
 val GreenDas = Color(0xFF148700)
+
+val TransparentDarkGray = Color(0xE4000000)

@@ -7,12 +7,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.cristiancizmar.learnalanguage.R
 import com.cristiancizmar.learnalanguage.presentation.common.SelectionButton
 import com.cristiancizmar.learnalanguage.presentation.common.BasicTextField
+import com.cristiancizmar.learnalanguage.presentation.common.WideSelectionButton
 import com.cristiancizmar.learnalanguage.presentation.theme.LearnALanguageTheme
 
 @Composable
@@ -29,19 +31,41 @@ fun SetupPracticeScreen(
             ) {
                 BasicTextField(
                     value = viewModel.state.minWords?.toString() ?: "",
-                    onValueChange = { viewModel.onAction(SetupPracticeViewModel.SetupPracticeEvent.UpdateMinIndex(it.toIntOrNull())) },
-                    label = stringResource(R.string.min_words)
+                    onValueChange = {
+                        viewModel.onAction(
+                            SetupPracticeViewModel.SetupPracticeEvent.UpdateMinIndex(
+                                it.toIntOrNull()
+                            )
+                        )
+                    },
+                    label = stringResource(R.string.start_index),
+                    keyboardType = KeyboardType.Number
                 )
                 BasicTextField(
                     value = viewModel.state.maxWords?.toString() ?: "",
-                    onValueChange = { viewModel.onAction(SetupPracticeViewModel.SetupPracticeEvent.UpdateMaxIndex(it.toIntOrNull())) },
-                    label = stringResource(R.string.max_words)
+                    onValueChange = {
+                        viewModel.onAction(
+                            SetupPracticeViewModel.SetupPracticeEvent.UpdateMaxIndex(
+                                it.toIntOrNull()
+                            )
+                        )
+                    },
+                    label = stringResource(R.string.end_index),
+                    keyboardType = KeyboardType.Number
                 )
                 BasicTextField(
                     value = viewModel.state.answerDelay?.toString() ?: "",
-                    onValueChange = { viewModel.onAction(SetupPracticeViewModel.SetupPracticeEvent.UpdateAnswerDelay(it.toIntOrNull())) },
-                    label = stringResource(R.string.transaltion_delay)
+                    onValueChange = {
+                        viewModel.onAction(
+                            SetupPracticeViewModel.SetupPracticeEvent.UpdateAnswerDelay(
+                                it.toIntOrNull()
+                            )
+                        )
+                    },
+                    label = stringResource(R.string.translation_delay),
+                    keyboardType = KeyboardType.Number
                 )
+                Spacer(modifier = Modifier.height(10.dp))
                 SelectionButton(
                     text = stringResource(
                         R.string.save_results,
@@ -52,21 +76,19 @@ fun SetupPracticeScreen(
                 SelectionButton(
                     text = stringResource(
                         R.string.min_difficulty,
-                        if (viewModel.state.difficulty == 1) {
-                            stringResource(R.string.all)
-                        } else {
-                            viewModel.state.difficulty.toString()
-                        }
+                        viewModel.state.difficulty.toString()
                     ),
                     onClick = { viewModel.onAction(SetupPracticeViewModel.SetupPracticeEvent.UpdateDifficulty) }
                 )
-                SelectionButton(
+                Spacer(modifier = Modifier.height(20.dp))
+                WideSelectionButton(
                     text = stringResource(R.string.continue_text),
                     onClick = {
                         navController.navigate(
                             route = "Practice/${viewModel.state.minWords ?: 1}&${viewModel.state.maxWords ?: 5000}&${viewModel.state.answerDelay ?: 500}&${viewModel.state.saveResults}&${viewModel.state.difficulty}"
                         )
-                    }
+                    },
+                    innerModifier = Modifier.padding(vertical = 10.dp)
                 )
             }
         }

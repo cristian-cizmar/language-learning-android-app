@@ -5,5 +5,7 @@ data class HomeState(
     val switchLanguages: Boolean = false,
     val files: List<String>,
     val selectedFileName: String = "",
-    val favoriteFileName: String = ""
+    val favoriteFileName: String = "",
+    val showLanguagePopup: Boolean = false,
+    val showDataPopup: Boolean = false
 )

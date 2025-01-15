@@ -26,6 +26,7 @@ import androidx.navigation.NavController
 import com.cristiancizmar.learnalanguage.R
 import com.cristiancizmar.learnalanguage.presentation.common.SelectionButton
 import com.cristiancizmar.learnalanguage.presentation.common.SimpleButton
+import com.cristiancizmar.learnalanguage.presentation.common.WideSelectionButton
 import com.cristiancizmar.learnalanguage.presentation.common.rememberTextToSpeech
 import com.cristiancizmar.learnalanguage.presentation.common.speak
 import com.cristiancizmar.learnalanguage.presentation.theme.LearnALanguageTheme
@@ -88,18 +89,16 @@ fun PracticeScreen(
                     )
                 }
                 if (!viewModel.state.ended) {
-                    SelectionButton(
+                    WideSelectionButton(
                         text = if (viewModel.state.showTranslation) {
                             viewModel.state.translated
                         } else {
-                            stringResource(R.string.click_for_answer)
+                            stringResource(R.string.answer)
                         },
                         onClick = { viewModel.onAction(PracticeViewModel.PracticeEvent.ShowAnswer) },
-                        paddingHorizontal = 20,
-                        paddingVertical = 10
+                        modifier = Modifier.padding(vertical = 10.dp),
+                        innerModifier = Modifier.padding(vertical = 10.dp)
                     )
-                }
-                if (viewModel.state.showCheckButtons) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
@@ -109,13 +108,15 @@ fun PracticeScreen(
                             text = stringResource(R.string.wrong),
                             onClick = { viewModel.onAction(PracticeViewModel.PracticeEvent.ClickWrong) },
                             paddingHorizontal = 20,
-                            paddingVertical = 10
+                            paddingVertical = 10,
+                            enabled = viewModel.state.showCheckButtons
                         )
                         SelectionButton(
                             text = stringResource(R.string.correct),
                             onClick = { viewModel.onAction(PracticeViewModel.PracticeEvent.ClickCorrect) },
                             paddingHorizontal = 20,
-                            paddingVertical = 10
+                            paddingVertical = 10,
+                            enabled = viewModel.state.showCheckButtons
                         )
                     }
                 }

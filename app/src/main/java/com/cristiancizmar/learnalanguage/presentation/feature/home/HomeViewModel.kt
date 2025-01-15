@@ -20,6 +20,10 @@ class HomeViewModel @Inject constructor(private val fileWordsRepository: FileWor
         data class UpdateSelectedFileName(val fileName: String) : HomeEvent()
         data class UpdateFavoriteFileName(val fileName: String) : HomeEvent()
         data object SwitchLanguages : HomeEvent()
+        data object ShowLanguagePopup : HomeEvent()
+        data object HideLanguagePopup : HomeEvent()
+        data object ShowDataPopup : HomeEvent()
+        data object HideDataPopup : HomeEvent()
     }
 
     var state by mutableStateOf(
@@ -61,6 +65,21 @@ class HomeViewModel @Inject constructor(private val fileWordsRepository: FileWor
                 switchLanguages()
             }
 
+            HomeEvent.ShowLanguagePopup -> {
+                showLanguagePopup()
+            }
+
+            HomeEvent.HideLanguagePopup -> {
+                hideLanguagePopup()
+            }
+
+            HomeEvent.ShowDataPopup -> {
+                showDataPopup()
+            }
+
+            HomeEvent.HideDataPopup -> {
+                hideDataPopup()
+            }
         }
     }
 
@@ -98,5 +117,21 @@ class HomeViewModel @Inject constructor(private val fileWordsRepository: FileWor
     private fun updateNotesText(text: String) {
         state = state.copy(notesText = text)
         fileWordsRepository.setMainText(text)
+    }
+
+    private fun showLanguagePopup() {
+        state = state.copy(showLanguagePopup = true)
+    }
+
+    private fun hideLanguagePopup() {
+        state = state.copy(showLanguagePopup = false)
+    }
+
+    private fun showDataPopup() {
+        state = state.copy(showDataPopup = true)
+    }
+
+    private fun hideDataPopup() {
+        state = state.copy(showDataPopup = false)
     }
 }

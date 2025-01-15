@@ -1,27 +1,27 @@
 <resources>
     <string name="all">all</string>
     <string name="app_name">Learning</string>
-    <string name="attempts_short">ATT</string>
-    <string name="click_for_answer">click for answer</string>
+    <string name="attempts_short">Attempts</string>
+    <string name="answer">answer</string>
     <string name="continue_text">Continue</string>
     <string name="correct">Correct</string>
-    <string name="difficulty_short">DIFF</string>
+    <string name="difficulty_short">Difficulty</string>
     <string name="difficulty_specify">Difficulty: %s</string>
-    <string name="export_saved_data">Export saved data</string>
-    <string name="import_saved_data">Import saved data</string>
-    <string name="index_short">IDX</string>
-    <string name="max_words">Max Words</string>
+    <string name="export_saved_data">Export</string>
+    <string name="import_saved_data">Import</string>
+    <string name="index_short">Index</string>
+    <string name="end_index">End index</string>
     <string name="min_difficulty">Min difficulty: %s</string>
-    <string name="min_words">Min Words</string>
+    <string name="start_index">Start index</string>
     <string name="note_placeholder">write your notes here…</string>
     <string name="note_word">your notes for this word…</string>
-    <string name="original_short">ORIG</string>
-    <string name="percentage_short">PERC</string>
+    <string name="original_short">Original</string>
+    <string name="percentage_short">Correctness</string>
     <string name="practice">Practice</string>
     <string name="save_results">Save results: %s</string>
     <string name="search">Search</string>
-    <string name="switch_languages">Switch languages = %s</string>
-    <string name="transaltion_delay">translation delay</string>
+    <string name="invert_languages">Invert languages = %s</string>
+    <string name="translation_delay">translation delay</string>
     <string name="words_list">Words list</string>
     <string name="wrong">Wrong</string>
 </resources>
