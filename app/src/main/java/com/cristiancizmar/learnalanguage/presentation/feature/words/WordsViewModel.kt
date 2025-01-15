@@ -26,6 +26,8 @@ class WordsViewModel @Inject constructor(private val fileWordsRepository: FileWo
         data class SetWordNote(val note: String) : WordsEvent()
         data object RemoveSelectedWord : WordsEvent()
         data object UpdateWordDifficulty : WordsEvent()
+        data object ShowSearchPopup : WordsEvent()
+        data object HideSearchPopup : WordsEvent()
     }
 
     enum class SORT { IDX, ATT, PERC, DIFF, ORIG }
@@ -42,30 +44,45 @@ class WordsViewModel @Inject constructor(private val fileWordsRepository: FileWo
     }
 
     fun onAction(event: WordsEvent) {
-        when(event) {
+        when (event) {
             is WordsEvent.SetMinWords -> {
                 setMinWords(event.words)
             }
+
             is WordsEvent.SetMaxWords -> {
                 setMaxWords(event.words)
             }
+
             is WordsEvent.UpdateSort -> {
                 updateSort(event.sort)
             }
+
             is WordsEvent.SetSelectedWord -> {
                 setSelectedWord(event.word)
             }
+
             is WordsEvent.UpdateSearch -> {
                 updateSearch(event.search)
             }
+
             is WordsEvent.SetWordNote -> {
                 setWordNote(event.note)
             }
+
             WordsEvent.RemoveSelectedWord -> {
                 removeSelectedWord()
             }
+
             WordsEvent.UpdateWordDifficulty -> {
                 updateWordDifficulty()
+            }
+
+            WordsEvent.ShowSearchPopup -> {
+                showSearchPopup()
+            }
+
+            WordsEvent.HideSearchPopup -> {
+                hideSearchPopup()
             }
         }
     }
@@ -202,6 +219,18 @@ class WordsViewModel @Inject constructor(private val fileWordsRepository: FileWo
         state = state.copy(
             words = newList,
             customSorting = sort != SORT.IDX || !sortAsc || state.minWords != DEFAULT_MIN_WORDS || state.maxWords != DEFAULT_MAX_WORDS
+        )
+    }
+
+    private fun showSearchPopup() {
+        state = state.copy(
+            showSearchPopup = true
+        )
+    }
+
+    private fun hideSearchPopup() {
+        state = state.copy(
+            showSearchPopup = false
         )
     }
 }

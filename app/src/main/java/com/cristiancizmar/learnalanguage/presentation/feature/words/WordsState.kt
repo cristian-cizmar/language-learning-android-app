@@ -10,4 +10,5 @@ data class WordsState(
     val customSorting: Boolean = false,
     val minWords: Int? = DEFAULT_MIN_WORDS,
     val maxWords: Int? = DEFAULT_MAX_WORDS,
+    val showSearchPopup: Boolean = false
 )

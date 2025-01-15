@@ -1,6 +1,7 @@
 package com.cristiancizmar.learnalanguage.presentation.feature.words
 
 import androidx.activity.compose.BackHandler
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -21,6 +22,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -52,6 +55,8 @@ fun WordsScreen(
     BackHandler {
         if (viewModel.state.selectedWord != null) {
             viewModel.onAction(WordsViewModel.WordsEvent.RemoveSelectedWord)
+        } else if (viewModel.state.showSearchPopup) {
+            viewModel.onAction(WordsViewModel.WordsEvent.HideSearchPopup)
         } else if (navController.previousBackStackEntry != null) {
             navController.popBackStack()
         }
@@ -59,12 +64,56 @@ fun WordsScreen(
     LearnALanguageTheme {
         Surface(color = Color.Black) {
             Column(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(top = 20.dp),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    BasicTextField(
+                        modifier = Modifier.requiredWidth(100.dp),
+                        value = viewModel.state.minWords?.toString() ?: "",
+                        onValueChange = {
+                            viewModel.onAction(
+                                WordsViewModel.WordsEvent.SetMinWords(
+                                    it.toIntOrNull()
+                                )
+                            )
+                        },
+                        label = stringResource(R.string.start_index),
+                        keyboardType = KeyboardType.Number
+                    )
+                    BasicTextField(
+                        modifier = Modifier.requiredWidth(100.dp),
+                        value = viewModel.state.maxWords?.toString() ?: "",
+                        onValueChange = {
+                            viewModel.onAction(
+                                WordsViewModel.WordsEvent.SetMaxWords(
+                                    it.toIntOrNull()
+                                )
+                            )
+                        },
+                        label = stringResource(R.string.end_index),
+                        keyboardType = KeyboardType.Number
+                    )
+                    Image(
+                        painterResource(R.drawable.search),
+                        contentDescription = "",
+                        contentScale = ContentScale.FillHeight,
+                        modifier = Modifier.clickable {
+                            viewModel.onAction(WordsViewModel.WordsEvent.ShowSearchPopup)
+                        }
+                    )
+                }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 20.dp),
                     horizontalArrangement = Arrangement.spacedBy(5.dp)
                 ) {
                     SimpleButton(
@@ -114,7 +163,7 @@ fun WordsScreen(
                         })
                 }
                 LazyColumn(
-                    modifier = Modifier.fillMaxHeight(0.5f),
+                    modifier = Modifier.fillMaxHeight(),
                     contentPadding = PaddingValues(all = 5.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
@@ -135,54 +184,6 @@ fun WordsScreen(
                         )
                     }
                 }
-                LazyColumn(
-                    modifier = Modifier.fillMaxHeight(0.5f),
-                    contentPadding = PaddingValues(all = 12.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    itemsIndexed(
-                        items = viewModel.state.searchedWords,
-                        key = { index, word -> word.index }
-                    ) { index, word ->
-                        WordRow(word = word, color = Color.Cyan)
-                    }
-                }
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    BasicTextField(
-                        modifier = Modifier.requiredWidth(100.dp),
-                        value = viewModel.state.minWords?.toString() ?: "",
-                        onValueChange = {
-                            viewModel.onAction(
-                                WordsViewModel.WordsEvent.SetMinWords(
-                                    it.toIntOrNull()
-                                )
-                            )
-                        },
-                        label = stringResource(R.string.start_index),
-                        keyboardType = KeyboardType.Number
-                    )
-                    BasicTextField(
-                        modifier = Modifier.requiredWidth(100.dp),
-                        value = viewModel.state.maxWords?.toString() ?: "",
-                        onValueChange = {
-                            viewModel.onAction(
-                                WordsViewModel.WordsEvent.SetMaxWords(
-                                    it.toIntOrNull()
-                                )
-                            )
-                        },
-                        label = stringResource(R.string.end_index),
-                        keyboardType = KeyboardType.Number
-                    )
-                }
-                BasicTextField(
-                    value = viewModel.state.searchText,
-                    onValueChange = { viewModel.onAction(WordsViewModel.WordsEvent.UpdateSearch(it)) },
-                    label = stringResource(R.string.search)
-                )
             }
             if (viewModel.state.selectedWord != null) {
                 Column(
@@ -217,6 +218,18 @@ fun WordsScreen(
                         label = stringResource(R.string.note_word)
                     )
                 }
+            }
+            if (viewModel.state.showSearchPopup) {
+                WordsSearch(
+                    words = viewModel.state.searchedWords,
+                    searchText = viewModel.state.searchText,
+                    onSearchTextChange = {
+                        viewModel.onAction(
+                            WordsViewModel.WordsEvent.UpdateSearch(it)
+                        )
+                    },
+                    onClose = { viewModel.onAction(WordsViewModel.WordsEvent.HideSearchPopup) }
+                )
             }
         }
     }
