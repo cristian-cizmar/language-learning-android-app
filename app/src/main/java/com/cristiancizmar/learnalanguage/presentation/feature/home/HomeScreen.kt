@@ -1,5 +1,6 @@
 package com.cristiancizmar.learnalanguage.presentation.feature.home
 
+import android.app.Activity
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -45,7 +46,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
         } else if (viewModel.state.showLanguagePopup) {
             viewModel.onAction(HomeViewModel.HomeEvent.HideLanguagePopup)
         } else {
-            navController.popBackStack()
+            (ctx as? Activity)?.finish()
         }
     }
     LearnALanguageTheme {
