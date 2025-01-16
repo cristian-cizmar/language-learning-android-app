@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.AlertDialog
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +27,7 @@ import androidx.navigation.NavController
 import com.cristiancizmar.learnalanguage.R
 import com.cristiancizmar.learnalanguage.presentation.common.SelectionButton
 import com.cristiancizmar.learnalanguage.presentation.common.SimpleButton
+import com.cristiancizmar.learnalanguage.presentation.common.TopAppBar
 import com.cristiancizmar.learnalanguage.presentation.common.WideSelectionButton
 import com.cristiancizmar.learnalanguage.presentation.common.rememberTextToSpeech
 import com.cristiancizmar.learnalanguage.presentation.common.speak
@@ -49,99 +51,112 @@ fun PracticeScreen(
         viewModel.onAction(PracticeViewModel.PracticeEvent.ShowQuitConfirmationDialog)
     }
     LearnALanguageTheme {
-        Surface(color = Color.Black) {
-            Column(
-                modifier = Modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                Text(
-                    modifier = Modifier
-                        .verticalScroll(rememberScrollState())
-                        .padding(10.dp, 10.dp)
-                        .fillMaxWidth(),
-                    text = viewModel.state.details,
-                    color = Color.White,
-                    textAlign = TextAlign.End
-                )
-                Text(
-                    modifier = Modifier
-                        .padding(10.dp, 10.dp)
-                        .fillMaxWidth(),
-                    text = viewModel.state.wordNote,
-                    color = Color.White,
-                    textAlign = TextAlign.End
-                )
-                Column(
-                    modifier = Modifier
-                        .weight(4f)
-                        .fillMaxWidth()
-                        .clickable { speak(tts, viewModel.state.original) },
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Text(
-                        modifier = Modifier
-                            .verticalScroll(rememberScrollState())
-                            .fillMaxWidth(),
-                        text = viewModel.state.original,
-                        textAlign = TextAlign.Center,
-                        color = Color.White
-                    )
-                }
-                if (!viewModel.state.ended) {
-                    WideSelectionButton(
-                        text = if (viewModel.state.showTranslation) {
-                            viewModel.state.translated
-                        } else {
-                            stringResource(R.string.answer)
-                        },
-                        onClick = { viewModel.onAction(PracticeViewModel.PracticeEvent.ShowAnswer) },
-                        modifier = Modifier.padding(vertical = 10.dp),
-                        innerModifier = Modifier.padding(vertical = 10.dp)
-                    )
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        SelectionButton(
-                            text = stringResource(R.string.wrong),
-                            onClick = { viewModel.onAction(PracticeViewModel.PracticeEvent.ClickWrong) },
-                            paddingHorizontal = 20,
-                            paddingVertical = 10,
-                            enabled = viewModel.state.showCheckButtons
-                        )
-                        SelectionButton(
-                            text = stringResource(R.string.correct),
-                            onClick = { viewModel.onAction(PracticeViewModel.PracticeEvent.ClickCorrect) },
-                            paddingHorizontal = 20,
-                            paddingVertical = 10,
-                            enabled = viewModel.state.showCheckButtons
-                        )
+        Scaffold(
+            topBar = {
+                TopAppBar {
+                    if (navController.previousBackStackEntry != null) {
+                        navController.popBackStack()
                     }
                 }
-            }
-
-            if (viewModel.state.showConfirmDialog) {
-                AlertDialog(
-                    onDismissRequest = {
-                        viewModel.onAction(PracticeViewModel.PracticeEvent.CancelQuitDialog)
-                    },
-                    title = { Text(text = "Are you sure you want to quit?") },
-                    confirmButton = {
-                        SimpleButton(text = "Yes", modifier = Modifier.padding(20.dp)) {
-                            if (navController.previousBackStackEntry != null) {
-                                navController.popBackStack()
+            },
+            content = { padding ->
+                Surface(
+                    color = Color.Black,
+                    modifier = Modifier.padding(padding)
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        Text(
+                            modifier = Modifier
+                                .verticalScroll(rememberScrollState())
+                                .padding(10.dp, 10.dp)
+                                .fillMaxWidth(),
+                            text = viewModel.state.details,
+                            color = Color.White,
+                            textAlign = TextAlign.End
+                        )
+                        Text(
+                            modifier = Modifier
+                                .padding(10.dp, 10.dp)
+                                .fillMaxWidth(),
+                            text = viewModel.state.wordNote,
+                            color = Color.White,
+                            textAlign = TextAlign.End
+                        )
+                        Column(
+                            modifier = Modifier
+                                .weight(4f)
+                                .fillMaxWidth()
+                                .clickable { speak(tts, viewModel.state.original) },
+                            verticalArrangement = Arrangement.Center
+                        ) {
+                            Text(
+                                modifier = Modifier
+                                    .verticalScroll(rememberScrollState())
+                                    .fillMaxWidth(),
+                                text = viewModel.state.original,
+                                textAlign = TextAlign.Center,
+                                color = Color.White
+                            )
+                        }
+                        if (!viewModel.state.ended) {
+                            WideSelectionButton(
+                                text = if (viewModel.state.showTranslation) {
+                                    viewModel.state.translated
+                                } else {
+                                    stringResource(R.string.answer)
+                                },
+                                onClick = { viewModel.onAction(PracticeViewModel.PracticeEvent.ShowAnswer) },
+                                modifier = Modifier.padding(vertical = 10.dp),
+                                innerModifier = Modifier.padding(vertical = 10.dp)
+                            )
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.SpaceBetween
+                            ) {
+                                SelectionButton(
+                                    text = stringResource(R.string.wrong),
+                                    onClick = { viewModel.onAction(PracticeViewModel.PracticeEvent.ClickWrong) },
+                                    paddingHorizontal = 20,
+                                    paddingVertical = 10,
+                                    enabled = viewModel.state.showCheckButtons
+                                )
+                                SelectionButton(
+                                    text = stringResource(R.string.correct),
+                                    onClick = { viewModel.onAction(PracticeViewModel.PracticeEvent.ClickCorrect) },
+                                    paddingHorizontal = 20,
+                                    paddingVertical = 10,
+                                    enabled = viewModel.state.showCheckButtons
+                                )
                             }
                         }
-                    },
-                    dismissButton = {
-                        SimpleButton(text = "No", modifier = Modifier.padding(20.dp)) {
-                            viewModel.onAction(PracticeViewModel.PracticeEvent.CancelQuitDialog)
-                        }
                     }
-                )
+                    if (viewModel.state.showConfirmDialog) {
+                        AlertDialog(
+                            onDismissRequest = {
+                                viewModel.onAction(PracticeViewModel.PracticeEvent.CancelQuitDialog)
+                            },
+                            title = { Text(text = "Are you sure you want to quit?") },
+                            confirmButton = {
+                                SimpleButton(text = "Yes", modifier = Modifier.padding(20.dp)) {
+                                    if (navController.previousBackStackEntry != null) {
+                                        navController.popBackStack()
+                                    }
+                                }
+                            },
+                            dismissButton = {
+                                SimpleButton(text = "No", modifier = Modifier.padding(20.dp)) {
+                                    viewModel.onAction(PracticeViewModel.PracticeEvent.CancelQuitDialog)
+                                }
+                            }
+                        )
+                    }
+                }
             }
-        }
+        )
     }
 }

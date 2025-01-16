@@ -2,10 +2,10 @@ package com.cristiancizmar.learnalanguage.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
-val Purple200 = Color(0xFFBB86FC)
-val Purple500 = Color(0xFF6200EE)
-val Purple700 = Color(0xFF3700B3)
-val Teal200 = Color(0xFF03DAC5)
+val GreenLight = Color(0xFF7FF274)
+val Green = Color(0xFF40CC33)
+val GreenDark = Color(0xFF198F0E)
+val Secondary = Color(0xFF248754)
 
 val BlueDer = Color(0xFF000287)
 val RedDie = Color(0xFF870044)

@@ -42,7 +42,7 @@ fun SetupNavGraph(navHostController: NavHostController) {
         composable(
             route = Screen.Settings.route
         ) {
-            SettingsScreen()
+            SettingsScreen(navController = navHostController)
         }
         composable(
             route = Screen.Practice.route,
