@@ -33,11 +33,11 @@ fun SetupPracticeScreen(
     LearnALanguageTheme {
         Scaffold(
             topBar = {
-                TopAppBar {
+                TopAppBar({
                     if (navController.previousBackStackEntry != null) {
                         navController.popBackStack()
                     }
-                }
+                })
             },
             content = { padding ->
                 Column(
@@ -78,17 +78,17 @@ fun SetupPracticeScreen(
                     Spacer(modifier = Modifier.height(10.dp))
                     SelectionButton(
                         text = stringResource(
-                            R.string.save_results,
-                            viewModel.state.saveResults.toString()
-                        ),
-                        onClick = { viewModel.onAction(SetupPracticeViewModel.SetupPracticeEvent.UpdateSaveResults) }
-                    )
-                    SelectionButton(
-                        text = stringResource(
                             R.string.min_difficulty,
                             viewModel.state.difficulty.toString()
                         ),
                         onClick = { viewModel.onAction(SetupPracticeViewModel.SetupPracticeEvent.UpdateDifficulty) }
+                    )
+                    SelectionButton(
+                        text = stringResource(
+                            R.string.save_results,
+                            viewModel.state.saveResults.toString()
+                        ),
+                        onClick = { viewModel.onAction(SetupPracticeViewModel.SetupPracticeEvent.UpdateSaveResults) }
                     )
                     WideSelectionButton(
                         text = stringResource(R.string.continue_text),
@@ -101,7 +101,6 @@ fun SetupPracticeScreen(
                         innerModifier = Modifier.padding(vertical = 10.dp)
                     )
                 }
-
             }
         )
     }

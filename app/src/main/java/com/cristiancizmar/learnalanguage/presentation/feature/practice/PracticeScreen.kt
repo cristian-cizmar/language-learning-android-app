@@ -53,11 +53,23 @@ fun PracticeScreen(
     LearnALanguageTheme {
         Scaffold(
             topBar = {
-                TopAppBar {
-                    if (navController.previousBackStackEntry != null) {
-                        navController.popBackStack()
-                    }
-                }
+                TopAppBar(
+                    onClickBack = {
+                        if (navController.previousBackStackEntry != null) {
+                            navController.popBackStack()
+                        }
+                    },
+                    content = {
+                        Text(
+                            modifier = Modifier
+                                .verticalScroll(rememberScrollState())
+                                .padding(10.dp, 10.dp)
+                                .fillMaxWidth(),
+                            text = viewModel.state.details,
+                            color = Color.White,
+                            textAlign = TextAlign.End
+                        )
+                    })
             },
             content = { padding ->
                 Surface(
@@ -69,15 +81,6 @@ fun PracticeScreen(
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Text(
-                            modifier = Modifier
-                                .verticalScroll(rememberScrollState())
-                                .padding(10.dp, 10.dp)
-                                .fillMaxWidth(),
-                            text = viewModel.state.details,
-                            color = Color.White,
-                            textAlign = TextAlign.End
-                        )
                         Text(
                             modifier = Modifier
                                 .padding(10.dp, 10.dp)

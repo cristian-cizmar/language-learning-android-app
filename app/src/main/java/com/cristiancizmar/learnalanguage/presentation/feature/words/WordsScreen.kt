@@ -66,22 +66,13 @@ fun WordsScreen(
     LearnALanguageTheme {
         Scaffold(
             topBar = {
-                TopAppBar {
-                    if (navController.previousBackStackEntry != null) {
-                        navController.popBackStack()
-                    }
-                }
-            },
-            content = { padding ->
-                Surface(
-                    color = Color.Black,
-                    modifier = Modifier.padding(padding)
-                ) {
-                    Column(
-                        modifier = Modifier.fillMaxSize(),
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally
-                    ) {
+                TopAppBar(
+                    onClickBack = {
+                        if (navController.previousBackStackEntry != null) {
+                            navController.popBackStack()
+                        }
+                    },
+                    content = {
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceEvenly,
@@ -122,6 +113,18 @@ fun WordsScreen(
                                 }
                             )
                         }
+                    })
+            },
+            content = { padding ->
+                Surface(
+                    color = Color.Black,
+                    modifier = Modifier.padding(padding)
+                ) {
+                    Column(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.Center,
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
