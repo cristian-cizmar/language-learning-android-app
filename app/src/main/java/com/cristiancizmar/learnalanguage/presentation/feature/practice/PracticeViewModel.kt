@@ -167,7 +167,7 @@ class PracticeViewModel @Inject constructor(
     }
 
     private fun getDetails() =
-        "delay=$answerDelay save=$saveResults, min=$minWords, max=$maxWords, remaining=${remainingWords.size}, $correct/${correct + wrong}, ${percentage()}, diff=${currentWord.difficulty}"
+        "Save: $saveResults, idx: ${minWords + 1}-$maxWords, diff: ${minDifficulty}\nRemain: ${remainingWords.size}, Correct: $correct/${correct + wrong} (${percentage()})"
 
     private fun showQuitConfirmationDialog() {
         state = state.copy(

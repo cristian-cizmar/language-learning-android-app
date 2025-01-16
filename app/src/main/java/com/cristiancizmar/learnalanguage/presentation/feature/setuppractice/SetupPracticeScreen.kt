@@ -8,6 +8,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -43,10 +45,10 @@ fun SetupPracticeScreen(
                 Column(
                     modifier = Modifier
                         .background(color = Color.Black)
-                        .padding(bottom = 100.dp)
                         .fillMaxSize()
+                        .verticalScroll(rememberScrollState())
                         .padding(padding),
-                    verticalArrangement = Arrangement.Center,
+                    verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     BasicTextField(
