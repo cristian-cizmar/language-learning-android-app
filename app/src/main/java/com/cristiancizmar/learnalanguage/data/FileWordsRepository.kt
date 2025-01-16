@@ -139,6 +139,15 @@ class FileWordsRepository {
         }
     }
 
+    fun getDelayCheckShowingAnswer() =
+        prefs!!.getBoolean("$packageName.delayBeforeCheckingAnswer", false)
+
+    fun setDelayCheckShowingAnswer(delay: Boolean) {
+        val editor = prefs!!.edit()
+        editor.putBoolean("$packageName.delayBeforeCheckingAnswer", delay)
+        editor.apply()
+    }
+
     private fun initPreferences(context: Context) {
         prefs = context.getSharedPreferences(
             packageName,

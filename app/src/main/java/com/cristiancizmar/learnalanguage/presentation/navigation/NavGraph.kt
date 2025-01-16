@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.cristiancizmar.learnalanguage.presentation.feature.home.HomeScreen
 import com.cristiancizmar.learnalanguage.presentation.feature.practice.PracticeScreen
+import com.cristiancizmar.learnalanguage.presentation.feature.settings.SettingsScreen
 import com.cristiancizmar.learnalanguage.presentation.feature.setuppractice.SetupPracticeScreen
 import com.cristiancizmar.learnalanguage.presentation.feature.words.WordsScreen
 
@@ -15,6 +16,7 @@ sealed class Screen(val route: String) {
     data object Home : Screen(route = "Home")
     data object Words : Screen(route = "Words")
     data object SetupPractice : Screen(route = "SetupPractice")
+    data object Settings : Screen(route = "Settings")
     data object Practice :
         Screen(route = "Practice/{minWords}&{maxWords}&{answerDelay}&{saveResults}&{difficulty}")
 }
@@ -36,6 +38,11 @@ fun SetupNavGraph(navHostController: NavHostController) {
             route = Screen.SetupPractice.route
         ) {
             SetupPracticeScreen(navController = navHostController)
+        }
+        composable(
+            route = Screen.Settings.route
+        ) {
+            SettingsScreen()
         }
         composable(
             route = Screen.Practice.route,

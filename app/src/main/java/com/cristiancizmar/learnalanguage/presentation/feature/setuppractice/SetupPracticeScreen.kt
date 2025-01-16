@@ -39,7 +39,8 @@ fun SetupPracticeScreen(
                         )
                     },
                     label = stringResource(R.string.start_index),
-                    keyboardType = KeyboardType.Number
+                    keyboardType = KeyboardType.Number,
+                    modifier = Modifier.fillMaxWidth(0.5f)
                 )
                 BasicTextField(
                     value = viewModel.state.maxWords?.toString() ?: "",
@@ -51,19 +52,8 @@ fun SetupPracticeScreen(
                         )
                     },
                     label = stringResource(R.string.end_index),
-                    keyboardType = KeyboardType.Number
-                )
-                BasicTextField(
-                    value = viewModel.state.answerDelay?.toString() ?: "",
-                    onValueChange = {
-                        viewModel.onAction(
-                            SetupPracticeViewModel.SetupPracticeEvent.UpdateAnswerDelay(
-                                it.toIntOrNull()
-                            )
-                        )
-                    },
-                    label = stringResource(R.string.translation_delay),
-                    keyboardType = KeyboardType.Number
+                    keyboardType = KeyboardType.Number,
+                    modifier = Modifier.fillMaxWidth(0.5f)
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 SelectionButton(
@@ -80,14 +70,14 @@ fun SetupPracticeScreen(
                     ),
                     onClick = { viewModel.onAction(SetupPracticeViewModel.SetupPracticeEvent.UpdateDifficulty) }
                 )
-                Spacer(modifier = Modifier.height(20.dp))
                 WideSelectionButton(
                     text = stringResource(R.string.continue_text),
                     onClick = {
                         navController.navigate(
-                            route = "Practice/${viewModel.state.minWords ?: 1}&${viewModel.state.maxWords ?: 5000}&${viewModel.state.answerDelay ?: 500}&${viewModel.state.saveResults}&${viewModel.state.difficulty}"
+                            route = "Practice/${viewModel.state.minWords ?: 1}&${viewModel.state.maxWords ?: 5000}&${viewModel.state.answerDelay}&${viewModel.state.saveResults}&${viewModel.state.difficulty}"
                         )
                     },
+                    modifier = Modifier.padding(vertical = 20.dp),
                     innerModifier = Modifier.padding(vertical = 10.dp)
                 )
             }

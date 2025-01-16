@@ -4,16 +4,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import com.cristiancizmar.learnalanguage.data.FileWordsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
+private const val DELAY_SHOW_ANSWER_AMOUNT = 500
+
 @HiltViewModel
-class SetupPracticeViewModel @Inject constructor() : ViewModel() {
+class SetupPracticeViewModel @Inject constructor(fileWordsRepository: FileWordsRepository) :
+    ViewModel() {
 
     sealed class SetupPracticeEvent {
         data class UpdateMinIndex(val index: Int?) : SetupPracticeEvent()
         data class UpdateMaxIndex(val index: Int?) : SetupPracticeEvent()
-        data class UpdateAnswerDelay(val delay: Int?) : SetupPracticeEvent()
         data object UpdateSaveResults : SetupPracticeEvent()
         data object UpdateDifficulty : SetupPracticeEvent()
     }
@@ -21,20 +24,26 @@ class SetupPracticeViewModel @Inject constructor() : ViewModel() {
     var state by mutableStateOf(SetupPracticeState())
         private set
 
+    init {
+        if (fileWordsRepository.getDelayCheckShowingAnswer()) {
+            setAnswerDelay()
+        }
+    }
+
     fun onAction(event: SetupPracticeEvent) {
         when (event) {
             is SetupPracticeEvent.UpdateMinIndex -> {
                 updateMin(event.index)
             }
+
             is SetupPracticeEvent.UpdateMaxIndex -> {
                 updateMax(event.index)
             }
-            is SetupPracticeEvent.UpdateAnswerDelay -> {
-                updateAnswerDelay(event.delay)
-            }
+
             SetupPracticeEvent.UpdateSaveResults -> {
                 updateSaveResults(!state.saveResults)
             }
+
             SetupPracticeEvent.UpdateDifficulty -> {
                 updateDifficulty()
             }
@@ -49,8 +58,8 @@ class SetupPracticeViewModel @Inject constructor() : ViewModel() {
         state = state.copy(maxWords = max)
     }
 
-    private fun updateAnswerDelay(delay: Int?) {
-        state = state.copy(answerDelay = delay)
+    private fun setAnswerDelay() {
+        state = state.copy(answerDelay = DELAY_SHOW_ANSWER_AMOUNT)
     }
 
     private fun updateSaveResults(save: Boolean) {
