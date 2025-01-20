@@ -33,8 +33,6 @@ class PracticeViewModel @Inject constructor(
     private var answerDelay = 500
     private var saveResults = false
     private var minDifficulty = 1
-    private var correct = 0
-    private var wrong = 0
     private var currentWord = Word()
     private var allWords: List<Word> = emptyList()
     private var remainingWords: MutableList<Word> = mutableListOf()
@@ -106,7 +104,9 @@ class PracticeViewModel @Inject constructor(
         if (saveResults) {
             fileWordsRepository.setWordCorrectness(currentWord.index, true)
         }
-        correct++
+        state = state.copy(
+            correct = state.correct + 1
+        )
         loadNextWord()
     }
 
@@ -114,7 +114,9 @@ class PracticeViewModel @Inject constructor(
         if (saveResults) {
             fileWordsRepository.setWordCorrectness(currentWord.index, false)
         }
-        wrong++
+        state = state.copy(
+            wrong = state.wrong + 1
+        )
         loadNextWord()
     }
 
@@ -132,7 +134,7 @@ class PracticeViewModel @Inject constructor(
             currentWord = remainingWords.random()
             remainingWords.remove(currentWord)
             state = state.copy(
-                original = "${currentWord.index}. ${currentWord.original}",
+                original = "${currentWord.original} (${currentWord.index})",
                 translated = getAllMeaningsOfWord(currentWord),
                 showTranslation = false,
                 showCheckButtons = false,
@@ -161,13 +163,8 @@ class PracticeViewModel @Inject constructor(
         return translations.joinToString(", ")
     }
 
-    private fun percentage(): String {
-        return if (correct + wrong == 0) "?%"
-        else "${(100 * correct / (correct + wrong))}%"
-    }
-
     private fun getDetails() =
-        "Save: $saveResults, idx: ${minWords + 1}-$maxWords, diff: ${minDifficulty}\nRemain: ${remainingWords.size}, Correct: $correct/${correct + wrong} (${percentage()})"
+        "Save: $saveResults, index: ${minWords + 1}-$maxWords\nDifficulty: ${minDifficulty}, remaining: ${remainingWords.size}"
 
     private fun showQuitConfirmationDialog() {
         state = state.copy(

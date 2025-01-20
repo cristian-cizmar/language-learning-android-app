@@ -8,5 +8,7 @@ data class PracticeState(
     val details: String = "",
     val ended: Boolean = false,
     val wordNote: String = "",
-    val showConfirmDialog: Boolean = false
+    val showConfirmDialog: Boolean = false,
+    val correct: Int = 0,
+    val wrong: Int = 0
 )

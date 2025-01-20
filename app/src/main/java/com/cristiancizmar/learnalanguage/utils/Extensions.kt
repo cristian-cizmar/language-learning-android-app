@@ -15,4 +15,7 @@ fun <T> List<T>.safeSubList(fromIndex: Int, toIndex: Int): List<T> =
         toIndex.coerceAtMost(this.size)
     )
 
-fun String.cleanWord() = toLowerCase(Locale.current).replace("\"", "")
+fun String.cleanWord() = toLowerCase(Locale.current)
+    .replace("\"", "")
+    .replace("(", "")
+    .replace(")", "")

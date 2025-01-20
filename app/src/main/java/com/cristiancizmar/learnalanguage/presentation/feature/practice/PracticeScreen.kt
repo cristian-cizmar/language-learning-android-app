@@ -20,8 +20,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.cristiancizmar.learnalanguage.R
@@ -32,6 +34,7 @@ import com.cristiancizmar.learnalanguage.presentation.common.WideSelectionButton
 import com.cristiancizmar.learnalanguage.presentation.common.rememberTextToSpeech
 import com.cristiancizmar.learnalanguage.presentation.common.speak
 import com.cristiancizmar.learnalanguage.presentation.theme.LearnALanguageTheme
+import com.cristiancizmar.learnalanguage.utils.percentage
 import kotlinx.coroutines.delay
 
 @Composable
@@ -66,7 +69,7 @@ fun PracticeScreen(
                                 .padding(10.dp, 10.dp)
                                 .fillMaxWidth(),
                             text = viewModel.state.details,
-                            color = Color.White,
+                            color = Color.Gray,
                             textAlign = TextAlign.End
                         )
                     })
@@ -81,6 +84,26 @@ fun PracticeScreen(
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
+                        if (viewModel.state.correct != 0 || viewModel.state.wrong != 0) {
+                            Text(
+                                modifier = Modifier
+                                    .padding(top = 10.dp, end = 10.dp)
+                                    .fillMaxWidth(),
+                                text = percentage(viewModel.state.correct, viewModel.state.wrong),
+                                color = Color.White,
+                                textAlign = TextAlign.End,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 30.sp
+                            )
+                            Text(
+                                modifier = Modifier
+                                    .padding(end = 10.dp)
+                                    .fillMaxWidth(),
+                                text = "${viewModel.state.correct} / ${viewModel.state.correct + viewModel.state.wrong}",
+                                color = Color.White,
+                                textAlign = TextAlign.End,
+                            )
+                        }
                         Text(
                             modifier = Modifier
                                 .padding(10.dp, 10.dp)

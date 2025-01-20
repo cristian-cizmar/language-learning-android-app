@@ -4,10 +4,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.cristiancizmar.learnalanguage.data.FileWordsRepository
 import com.cristiancizmar.learnalanguage.domain.Word
+import com.cristiancizmar.learnalanguage.utils.cleanWord
 import com.cristiancizmar.learnalanguage.utils.safeSubList
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 const val DEFAULT_MIN_WORDS = 1
@@ -37,10 +42,13 @@ class WordsViewModel @Inject constructor(private val fileWordsRepository: FileWo
 
     private var sort = SORT.IDX
     private var sortAsc = true
-    private val allWords = getWordsWithAllMeanings()
+    private lateinit var allWords: List<Word>
 
     init {
         loadFile()
+        viewModelScope.launch {
+            allWords = getWordsWithAllMeanings()
+        }
     }
 
     fun onAction(event: WordsEvent) {
@@ -174,7 +182,7 @@ class WordsViewModel @Inject constructor(private val fileWordsRepository: FileWo
         loadFile()
     }
 
-    private fun getWordsWithAllMeanings(): List<Word> {
+    private suspend fun getWordsWithAllMeanings() = withContext(Dispatchers.IO) {
         val words = fileWordsRepository.getWordsFromFile().toMutableList()
         val finalList = words.map { it.copy() } // deep copy
 
@@ -187,39 +195,41 @@ class WordsViewModel @Inject constructor(private val fileWordsRepository: FileWo
             }
             finalList[index].translated = meanings.distinct().joinToString(", ")
         }
-        return finalList
+        finalList
     }
 
     private fun loadFile() {
-        val minWords = (state.minWords ?: 1) - 1
-        var maxWords = (state.maxWords ?: 5000)
-        if (maxWords < minWords) {
-            maxWords = minWords
-        }
+        viewModelScope.launch {
+            val minWords = (state.minWords ?: 1) - 1
+            var maxWords = (state.maxWords ?: 5000)
+            if (maxWords < minWords) {
+                maxWords = minWords
+            }
 
-        var newList = getWordsWithAllMeanings()
-            .safeSubList(minWords, maxWords)
-            .sortedBy {
-                when (sort) {
-                    SORT.IDX -> it.index
-                    SORT.ATT -> it.attempts
-                    SORT.PERC -> it.guessesPercentageInt()
-                    SORT.DIFF -> it.difficulty
-                    else -> it.index
+            var newList = getWordsWithAllMeanings()
+                .safeSubList(minWords, maxWords)
+                .sortedBy {
+                    when (sort) {
+                        SORT.IDX -> it.index
+                        SORT.ATT -> it.attempts
+                        SORT.PERC -> it.guessesPercentageInt()
+                        SORT.DIFF -> it.difficulty
+                        else -> it.index
+                    }
+                }
+            if (sort == SORT.ORIG) {
+                newList = newList.sortedBy {
+                    it.original.cleanWord()
                 }
             }
-        if (sort == SORT.ORIG) {
-            newList = newList.sortedBy {
-                it.original.lowercase()
+            if (!sortAsc) {
+                newList = newList.reversed()
             }
+            state = state.copy(
+                words = newList,
+                customSorting = sort != SORT.IDX || !sortAsc || state.minWords != DEFAULT_MIN_WORDS || state.maxWords != DEFAULT_MAX_WORDS
+            )
         }
-        if (!sortAsc) {
-            newList = newList.reversed()
-        }
-        state = state.copy(
-            words = newList,
-            customSorting = sort != SORT.IDX || !sortAsc || state.minWords != DEFAULT_MIN_WORDS || state.maxWords != DEFAULT_MAX_WORDS
-        )
     }
 
     private fun showSearchPopup() {

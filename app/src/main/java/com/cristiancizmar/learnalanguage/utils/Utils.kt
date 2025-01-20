@@ -37,3 +37,8 @@ fun shareBackupFile(context: Context) {
         context.startActivity(Intent.createChooser(shareIntent, "Share File"))
     }
 }
+
+fun percentage(correct: Int, wrong: Int): String {
+    return if (correct + wrong == 0) "?%"
+    else "${(100 * correct / (correct + wrong))}%"
+}

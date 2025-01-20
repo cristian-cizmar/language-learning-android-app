@@ -33,11 +33,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.cristiancizmar.learnalanguage.R
+import com.cristiancizmar.learnalanguage.domain.Word
 import com.cristiancizmar.learnalanguage.presentation.common.BasicTextField
 import com.cristiancizmar.learnalanguage.presentation.common.SelectionButton
 import com.cristiancizmar.learnalanguage.presentation.common.SimpleButton
 import com.cristiancizmar.learnalanguage.presentation.common.TopAppBar
-import com.cristiancizmar.learnalanguage.presentation.common.WordRow
 import com.cristiancizmar.learnalanguage.presentation.common.rememberTextToSpeech
 import com.cristiancizmar.learnalanguage.presentation.common.speak
 import com.cristiancizmar.learnalanguage.presentation.theme.LearnALanguageTheme
@@ -75,45 +75,47 @@ fun WordsScreen(
                         }
                     },
                     content = {
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceEvenly,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            BasicTextField(
-                                modifier = Modifier.requiredWidth(100.dp),
-                                value = viewModel.state.minWords?.toString() ?: "",
-                                onValueChange = {
-                                    viewModel.onAction(
-                                        WordsViewModel.WordsEvent.SetMinWords(
-                                            it.toIntOrNull()
+                        if (!viewModel.state.showSearchPopup) {
+                            Row(
+                                modifier = Modifier.fillMaxWidth(),
+                                horizontalArrangement = Arrangement.SpaceEvenly,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                BasicTextField(
+                                    modifier = Modifier.requiredWidth(100.dp),
+                                    value = viewModel.state.minWords?.toString() ?: "",
+                                    onValueChange = {
+                                        viewModel.onAction(
+                                            WordsViewModel.WordsEvent.SetMinWords(
+                                                it.toIntOrNull()
+                                            )
                                         )
-                                    )
-                                },
-                                label = stringResource(R.string.start_index),
-                                keyboardType = KeyboardType.Number
-                            )
-                            BasicTextField(
-                                modifier = Modifier.requiredWidth(100.dp),
-                                value = viewModel.state.maxWords?.toString() ?: "",
-                                onValueChange = {
-                                    viewModel.onAction(
-                                        WordsViewModel.WordsEvent.SetMaxWords(
-                                            it.toIntOrNull()
+                                    },
+                                    label = stringResource(R.string.start_index),
+                                    keyboardType = KeyboardType.Number
+                                )
+                                BasicTextField(
+                                    modifier = Modifier.requiredWidth(100.dp),
+                                    value = viewModel.state.maxWords?.toString() ?: "",
+                                    onValueChange = {
+                                        viewModel.onAction(
+                                            WordsViewModel.WordsEvent.SetMaxWords(
+                                                it.toIntOrNull()
+                                            )
                                         )
-                                    )
-                                },
-                                label = stringResource(R.string.end_index),
-                                keyboardType = KeyboardType.Number
-                            )
-                            Image(
-                                painterResource(R.drawable.search),
-                                contentDescription = "",
-                                contentScale = ContentScale.FillHeight,
-                                modifier = Modifier.clickable {
-                                    viewModel.onAction(WordsViewModel.WordsEvent.ShowSearchPopup)
-                                }
-                            )
+                                    },
+                                    label = stringResource(R.string.end_index),
+                                    keyboardType = KeyboardType.Number
+                                )
+                                Image(
+                                    painterResource(R.drawable.search),
+                                    contentDescription = "",
+                                    contentScale = ContentScale.FillHeight,
+                                    modifier = Modifier.clickable {
+                                        viewModel.onAction(WordsViewModel.WordsEvent.ShowSearchPopup)
+                                    }
+                                )
+                            }
                         }
                     })
             },
@@ -198,10 +200,25 @@ fun WordsScreen(
                                             )
                                         )
                                     },
-                                    index = if (viewModel.state.customSorting) index + 1 else -1
+                                    index = if (viewModel.state.customSorting) index + 1 else -1,
+                                    modifier = Modifier.animateItem()
                                 )
                             }
                         }
+                    }
+                    if (viewModel.state.showSearchPopup) {
+                        WordsSearch(
+                            words = viewModel.state.searchedWords,
+                            searchText = viewModel.state.searchText,
+                            onSearchTextChange = {
+                                viewModel.onAction(WordsViewModel.WordsEvent.UpdateSearch(it))
+                            },
+                            onClose = { viewModel.onAction(WordsViewModel.WordsEvent.HideSearchPopup) },
+                            onClickWord = { word: Word ->
+                                viewModel.onAction(WordsViewModel.WordsEvent.SetSelectedWord(word))
+                            },
+                            customSorting = viewModel.state.customSorting
+                        )
                     }
                     if (viewModel.state.selectedWord != null) {
                         Column(
@@ -236,18 +253,6 @@ fun WordsScreen(
                                 label = stringResource(R.string.note_word)
                             )
                         }
-                    }
-                    if (viewModel.state.showSearchPopup) {
-                        WordsSearch(
-                            words = viewModel.state.searchedWords,
-                            searchText = viewModel.state.searchText,
-                            onSearchTextChange = {
-                                viewModel.onAction(
-                                    WordsViewModel.WordsEvent.UpdateSearch(it)
-                                )
-                            },
-                            onClose = { viewModel.onAction(WordsViewModel.WordsEvent.HideSearchPopup) }
-                        )
                     }
                 }
             }

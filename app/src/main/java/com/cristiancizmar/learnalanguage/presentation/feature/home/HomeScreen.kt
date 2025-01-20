@@ -77,13 +77,14 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
                         modifier = Modifier
                             .padding(20.dp)
                             .clickable { navController.navigate(route = Screen.Settings.route) }
-                            .size(40.dp)
+                            .size(30.dp)
                     )
                 }
+                Title()
                 WideSelectionButton(
                     text = stringResource(R.string.words_list),
                     onClick = { navController.navigate(route = Screen.Words.route) },
-                    modifier = Modifier.padding(top = 20.dp)
+                    modifier = Modifier.padding(top = 30.dp)
                 )
                 WideSelectionButton(
                     text = stringResource(R.string.practice),

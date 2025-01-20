@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import com.cristiancizmar.learnalanguage.R
 import com.cristiancizmar.learnalanguage.domain.Word
 import com.cristiancizmar.learnalanguage.presentation.common.BasicTextField
-import com.cristiancizmar.learnalanguage.presentation.common.WordRow
+import com.cristiancizmar.learnalanguage.presentation.theme.GreenLight
 import com.cristiancizmar.learnalanguage.presentation.theme.TransparentDarkGray
 
 @Composable
@@ -32,7 +32,9 @@ fun WordsSearch(
     words: List<Word>,
     searchText: String,
     onSearchTextChange: ((String) -> Unit),
-    onClose: (() -> Unit)
+    onClose: (() -> Unit),
+    onClickWord: ((Word) -> Unit),
+    customSorting: Boolean
 ) {
     Column(
         modifier = Modifier
@@ -71,7 +73,13 @@ fun WordsSearch(
                 items = words,
                 key = { index, word -> word.index }
             ) { index, word ->
-                WordRow(word = word, color = Color.Cyan)
+                WordRow(
+                    word = word,
+                    color = GreenLight,
+                    onClick = { onClickWord(word) },
+                    index = if (customSorting) index + 1 else -1,
+                    modifier = Modifier.animateItem()
+                )
             }
         }
     }
