@@ -7,6 +7,7 @@ import com.cristiancizmar.learnalanguage.presentation.feature.words.WordsViewMod
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -26,9 +27,13 @@ class WordsViewModelTest {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
+    @Before
+    fun setUp() {
+        viewModel = WordsViewModel(dispatcher, fileWordsRepository)
+    }
+
     @Test
     fun setMinWords() = runTest {
-        viewModel = WordsViewModel(dispatcher, fileWordsRepository)
         val words = 5
 
         viewModel.onAction(WordsViewModel.WordsEvent.SetMinWords(words))
@@ -38,7 +43,6 @@ class WordsViewModelTest {
 
     @Test
     fun setMaxWords() = runTest {
-        viewModel = WordsViewModel(dispatcher, fileWordsRepository)
         val words = 5
 
         viewModel.onAction(WordsViewModel.WordsEvent.SetMaxWords(words))
@@ -48,7 +52,6 @@ class WordsViewModelTest {
 
     @Test
     fun updateSort() = runTest {
-        viewModel = WordsViewModel(dispatcher, fileWordsRepository)
         val sort = SORT.PERC
 
         viewModel.onAction(WordsViewModel.WordsEvent.UpdateSort(sort))
@@ -58,7 +61,6 @@ class WordsViewModelTest {
 
     @Test
     fun setSelectedWord() = runTest {
-        viewModel = WordsViewModel(dispatcher, fileWordsRepository)
         val word: Word = mock()
 
         viewModel.onAction(WordsViewModel.WordsEvent.SetSelectedWord(word))
@@ -68,7 +70,6 @@ class WordsViewModelTest {
 
     @Test
     fun setWordNote() = runTest {
-        viewModel = WordsViewModel(dispatcher, fileWordsRepository)
         val note = "note"
         val idx = 5
         val word = Word(idx, "", "", "", "", 0, 0, 1, "")
@@ -82,7 +83,6 @@ class WordsViewModelTest {
 
     @Test
     fun removeSelectedWord() = runTest {
-        viewModel = WordsViewModel(dispatcher, fileWordsRepository)
         val word: Word = mock()
         viewModel.onAction(WordsViewModel.WordsEvent.SetSelectedWord(word))
         Assert.assertEquals(word, viewModel.state.selectedWord)
@@ -94,8 +94,6 @@ class WordsViewModelTest {
 
     @Test
     fun showSearchPopup() = runTest {
-        viewModel = WordsViewModel(dispatcher, fileWordsRepository)
-
         viewModel.onAction(WordsViewModel.WordsEvent.ShowSearchPopup)
 
         Assert.assertTrue(viewModel.state.showSearchPopup)
@@ -103,7 +101,6 @@ class WordsViewModelTest {
 
     @Test
     fun hideSearchPopup() = runTest {
-        viewModel = WordsViewModel(dispatcher, fileWordsRepository)
         viewModel.onAction(WordsViewModel.WordsEvent.ShowSearchPopup)
         Assert.assertTrue(viewModel.state.showSearchPopup)
 
@@ -114,7 +111,6 @@ class WordsViewModelTest {
 
     @Test
     fun updateSearch() = runTest {
-        viewModel = WordsViewModel(dispatcher, fileWordsRepository)
         val search = "search"
         Whitebox.setInternalState(viewModel, "allWords", emptyList<Word>())
 
@@ -125,7 +121,6 @@ class WordsViewModelTest {
 
     @Test
     fun updateWordDifficulty_1to2() = runTest {
-        viewModel = WordsViewModel(dispatcher, fileWordsRepository)
         val newDifficulty = 2
         val idx = 5
         val word = Word(idx, "", "", "", "", 0, 0, 1, "")
@@ -139,7 +134,6 @@ class WordsViewModelTest {
 
     @Test
     fun updateWordDifficulty_1to3() = runTest {
-        viewModel = WordsViewModel(dispatcher, fileWordsRepository)
         val newDifficulty = 3
         val idx = 5
         val word = Word(idx, "", "", "", "", 0, 0, 1, "")
@@ -155,7 +149,6 @@ class WordsViewModelTest {
 
     @Test
     fun updateWordDifficulty_1to4() = runTest {
-        viewModel = WordsViewModel(dispatcher, fileWordsRepository)
         val newDifficulty = 4
         val idx = 5
         val word = Word(idx, "", "", "", "", 0, 0, 1, "")
@@ -171,7 +164,6 @@ class WordsViewModelTest {
 
     @Test
     fun updateWordDifficulty_1to4to1() = runTest {
-        viewModel = WordsViewModel(dispatcher, fileWordsRepository)
         val newDifficulty = 1
         val idx = 5
         val word = Word(idx, "", "", "", "", 0, 0, 1, "")
