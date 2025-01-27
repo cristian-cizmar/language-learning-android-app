@@ -10,6 +10,7 @@ import com.cristiancizmar.learnalanguage.domain.Word
 import com.cristiancizmar.learnalanguage.utils.cleanWord
 import com.cristiancizmar.learnalanguage.utils.safeSubList
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -19,7 +20,10 @@ const val DEFAULT_MIN_WORDS = 1
 const val DEFAULT_MAX_WORDS = 5000
 
 @HiltViewModel
-class WordsViewModel @Inject constructor(private val fileWordsRepository: FileWordsRepository) :
+class WordsViewModel @Inject constructor(
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val fileWordsRepository: FileWordsRepository
+) :
     ViewModel() {
 
     sealed class WordsEvent {
@@ -181,7 +185,7 @@ class WordsViewModel @Inject constructor(private val fileWordsRepository: FileWo
         loadFile()
     }
 
-    private suspend fun getWordsWithAllMeanings() = withContext(Dispatchers.IO) {
+    private suspend fun getWordsWithAllMeanings() = withContext(dispatcher) {
         val words = fileWordsRepository.getWordsFromFile().toMutableList()
         val finalList = words.map { it.copy() } // deep copy
 
