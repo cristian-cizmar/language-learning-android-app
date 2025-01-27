@@ -91,16 +91,12 @@ class HomeViewModel @Inject constructor(private val fileWordsRepository: FileWor
 
     private fun updateSelectedFileName(fileName: String) {
         fileWordsRepository.fileName = fileName
-        state = state.copy(
-            selectedFileName = fileName
-        )
+        state = state.copy(selectedFileName = fileName)
     }
 
     private fun updateFavoriteFileName(fileName: String) {
         fileWordsRepository.setFavoriteFileName(fileName)
-        state = state.copy(
-            favoriteFileName = fileName
-        )
+        state = state.copy(favoriteFileName = fileName)
     }
 
     private fun getFavoriteFileName() = fileWordsRepository.getFavoriteFileName()

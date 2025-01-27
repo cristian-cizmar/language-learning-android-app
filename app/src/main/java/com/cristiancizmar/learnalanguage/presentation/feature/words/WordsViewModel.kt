@@ -40,7 +40,6 @@ class WordsViewModel @Inject constructor(private val fileWordsRepository: FileWo
     var state by mutableStateOf(WordsState())
         private set
 
-    private var sort = SORT.IDX
     private var sortAsc = true
     private lateinit var allWords: List<Word>
 
@@ -172,10 +171,10 @@ class WordsViewModel @Inject constructor(private val fileWordsRepository: FileWo
     }
 
     private fun updateSort(newSort: SORT) {
-        if (sort == newSort) {
+        if (state.sort == newSort) {
             sortAsc = !sortAsc
         } else {
-            sort = newSort
+            state = state.copy(sort = newSort)
             sortAsc = true
         }
 
@@ -209,7 +208,7 @@ class WordsViewModel @Inject constructor(private val fileWordsRepository: FileWo
             var newList = getWordsWithAllMeanings()
                 .safeSubList(minWords, maxWords)
                 .sortedBy {
-                    when (sort) {
+                    when (state.sort) {
                         SORT.IDX -> it.index
                         SORT.ATT -> it.attempts
                         SORT.PERC -> it.guessesPercentageInt()
@@ -217,7 +216,7 @@ class WordsViewModel @Inject constructor(private val fileWordsRepository: FileWo
                         else -> it.index
                     }
                 }
-            if (sort == SORT.ORIG) {
+            if (state.sort == SORT.ORIG) {
                 newList = newList.sortedBy {
                     it.original.cleanWord()
                 }
@@ -227,7 +226,7 @@ class WordsViewModel @Inject constructor(private val fileWordsRepository: FileWo
             }
             state = state.copy(
                 words = newList,
-                customSorting = sort != SORT.IDX || !sortAsc || state.minWords != DEFAULT_MIN_WORDS || state.maxWords != DEFAULT_MAX_WORDS
+                customSorting = state.sort != SORT.IDX || !sortAsc || state.minWords != DEFAULT_MIN_WORDS || state.maxWords != DEFAULT_MAX_WORDS
             )
         }
     }

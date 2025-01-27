@@ -40,6 +40,7 @@ import com.cristiancizmar.learnalanguage.presentation.common.SimpleButton
 import com.cristiancizmar.learnalanguage.presentation.common.TopAppBar
 import com.cristiancizmar.learnalanguage.presentation.common.rememberTextToSpeech
 import com.cristiancizmar.learnalanguage.presentation.common.speak
+import com.cristiancizmar.learnalanguage.presentation.theme.GreenLight
 import com.cristiancizmar.learnalanguage.presentation.theme.LearnALanguageTheme
 import com.cristiancizmar.learnalanguage.presentation.theme.TransparentDarkGray
 
@@ -138,6 +139,10 @@ fun WordsScreen(
                         ) {
                             SimpleButton(
                                 text = stringResource(R.string.index_short),
+                                textColor = sortColor(
+                                    WordsViewModel.SORT.IDX,
+                                    viewModel.state.sort
+                                ),
                                 onClick = {
                                     viewModel.onAction(
                                         WordsViewModel.WordsEvent.UpdateSort(
@@ -147,6 +152,10 @@ fun WordsScreen(
                                 })
                             SimpleButton(
                                 text = stringResource(R.string.original_short),
+                                textColor = sortColor(
+                                    WordsViewModel.SORT.ORIG,
+                                    viewModel.state.sort
+                                ),
                                 onClick = {
                                     viewModel.onAction(
                                         WordsViewModel.WordsEvent.UpdateSort(
@@ -156,6 +165,10 @@ fun WordsScreen(
                                 })
                             SimpleButton(
                                 text = stringResource(R.string.attempts_short),
+                                textColor = sortColor(
+                                    WordsViewModel.SORT.ATT,
+                                    viewModel.state.sort
+                                ),
                                 onClick = {
                                     viewModel.onAction(
                                         WordsViewModel.WordsEvent.UpdateSort(
@@ -165,6 +178,10 @@ fun WordsScreen(
                                 })
                             SimpleButton(
                                 text = stringResource(R.string.percentage_short),
+                                textColor = sortColor(
+                                    WordsViewModel.SORT.PERC,
+                                    viewModel.state.sort
+                                ),
                                 onClick = {
                                     viewModel.onAction(
                                         WordsViewModel.WordsEvent.UpdateSort(
@@ -174,6 +191,10 @@ fun WordsScreen(
                                 })
                             SimpleButton(
                                 text = stringResource(R.string.difficulty_short),
+                                textColor = sortColor(
+                                    WordsViewModel.SORT.DIFF,
+                                    viewModel.state.sort
+                                ),
                                 onClick = {
                                     viewModel.onAction(
                                         WordsViewModel.WordsEvent.UpdateSort(
@@ -257,5 +278,13 @@ fun WordsScreen(
                 }
             }
         )
+    }
+}
+
+private fun sortColor(sortType: WordsViewModel.SORT, selectedType: WordsViewModel.SORT): Color {
+    return if (sortType == selectedType) {
+        GreenLight
+    } else {
+        Color.White
     }
 }

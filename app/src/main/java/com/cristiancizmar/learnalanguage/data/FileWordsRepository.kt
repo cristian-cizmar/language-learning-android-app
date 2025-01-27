@@ -27,50 +27,6 @@ class FileWordsRepository {
         initFavoriteFile()
     }
 
-    fun getWordsFromFile(): List<Word> {
-        val content = try {
-            val context = App.appContext ?: return emptyList()
-            val fileContent = context.assets.open(fileName!!)
-                .bufferedReader()
-                .use { it.readText() }
-            "\n$fileContent\n"
-        } catch (e: java.lang.Exception) {
-            ""
-        }
-        val words = content.split("\n")
-        val wordsList = words
-            .map { it.split("\t".toRegex()).take(5) }
-            .map {
-                val w = if (it.size == 5) {
-                    Word(
-                        index = it.getOrNull(0)?.toIntOrNull() ?: 0,
-                        original = it.getOrNull(1) ?: "",
-                        translated = it.getOrNull(2) ?: "",
-                        originalSentence = it.getOrNull(3) ?: "",
-                        translatedSentence = it.getOrNull(4) ?: ""
-                    )
-                } else {
-                    Word(
-                        index = it.getOrNull(0)?.toIntOrNull() ?: 0,
-                        original = it.getOrNull(1) ?: "",
-                        translated = it.getOrNull(2) ?: ""
-                    )
-                }
-                if (switchLanguages) {
-                    w.copy(original = w.translated, translated = w.original)
-                } else {
-                    w
-                }
-            }
-        wordsList.forEach { word ->
-            word.correctGuesses = getWordCorrectness(word.index, true)
-            word.attempts = word.correctGuesses + getWordCorrectness(word.index, false)
-            word.difficulty = getWordDifficulty(word.index)
-            word.note = getWordNote(word.index)
-        }
-        return wordsList.safeSubList(1, wordsList.size - 1)
-    }
-
     fun getFileNames(): List<String> {
         val context = App.appContext ?: return emptyList()
         val items = arrayListOf<String>()
@@ -146,6 +102,50 @@ class FileWordsRepository {
         val editor = prefs!!.edit()
         editor.putBoolean("$packageName.delayBeforeCheckingAnswer", delay)
         editor.apply()
+    }
+
+    fun getWordsFromFile(): List<Word> {
+        val content = try {
+            val context = App.appContext ?: return emptyList()
+            val fileContent = context.assets.open(fileName!!)
+                .bufferedReader()
+                .use { it.readText() }
+            "\n$fileContent\n"
+        } catch (e: java.lang.Exception) {
+            ""
+        }
+        val words = content.split("\n")
+        val wordsList = words
+            .map { it.split("\t".toRegex()).take(5) }
+            .map {
+                val w = if (it.size == 5) {
+                    Word(
+                        index = it.getOrNull(0)?.toIntOrNull() ?: 0,
+                        original = it.getOrNull(1) ?: "",
+                        translated = it.getOrNull(2) ?: "",
+                        originalSentence = it.getOrNull(3) ?: "",
+                        translatedSentence = it.getOrNull(4) ?: ""
+                    )
+                } else {
+                    Word(
+                        index = it.getOrNull(0)?.toIntOrNull() ?: 0,
+                        original = it.getOrNull(1) ?: "",
+                        translated = it.getOrNull(2) ?: ""
+                    )
+                }
+                if (switchLanguages) {
+                    w.copy(original = w.translated, translated = w.original)
+                } else {
+                    w
+                }
+            }
+        wordsList.forEach { word ->
+            word.correctGuesses = getWordCorrectness(word.index, true)
+            word.attempts = word.correctGuesses + getWordCorrectness(word.index, false)
+            word.difficulty = getWordDifficulty(word.index)
+            word.note = getWordNote(word.index)
+        }
+        return wordsList.safeSubList(1, wordsList.size - 1)
     }
 
     private fun initPreferences(context: Context) {

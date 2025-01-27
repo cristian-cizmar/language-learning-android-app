@@ -10,5 +10,6 @@ data class PracticeState(
     val wordNote: String = "",
     val showConfirmDialog: Boolean = false,
     val correct: Int = 0,
-    val wrong: Int = 0
+    val wrong: Int = 0,
+    val switchLanguages: Boolean = false
 )

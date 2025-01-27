@@ -1,6 +1,7 @@
 package com.cristiancizmar.learnalanguage.presentation.feature.words
 
 import com.cristiancizmar.learnalanguage.domain.Word
+import com.cristiancizmar.learnalanguage.presentation.feature.words.WordsViewModel.SORT
 
 data class WordsState(
     val words: List<Word> = emptyList(),
@@ -10,5 +11,6 @@ data class WordsState(
     val customSorting: Boolean = false,
     val minWords: Int? = DEFAULT_MIN_WORDS,
     val maxWords: Int? = DEFAULT_MAX_WORDS,
-    val showSearchPopup: Boolean = false
+    val showSearchPopup: Boolean = false,
+    val sort: SORT = SORT.IDX
 )

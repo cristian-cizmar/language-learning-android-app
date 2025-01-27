@@ -45,10 +45,19 @@ fun PracticeScreen(
     val tts = rememberTextToSpeech(viewModel.getFileLocale())
     LaunchedEffect(Unit) {
         delay(100L)
-        speak(tts, viewModel.state.original)
+        if (!viewModel.state.switchLanguages) {
+            speak(tts, viewModel.state.original)
+        }
     }
     LaunchedEffect(viewModel.state.original) {
-        speak(tts, viewModel.state.original)
+        if (!viewModel.state.switchLanguages) {
+            speak(tts, viewModel.state.original)
+        }
+    }
+    LaunchedEffect(viewModel.state.showCheckButtons) {
+        if (viewModel.state.showCheckButtons && viewModel.state.switchLanguages) {
+            speak(tts, viewModel.state.translated)
+        }
     }
     BackHandler {
         viewModel.onAction(PracticeViewModel.PracticeEvent.ShowQuitConfirmationDialog)
@@ -163,21 +172,37 @@ fun PracticeScreen(
                     }
                     if (viewModel.state.showConfirmDialog) {
                         AlertDialog(
+                            backgroundColor = Color.White,
                             onDismissRequest = {
                                 viewModel.onAction(PracticeViewModel.PracticeEvent.CancelQuitDialog)
                             },
-                            title = { Text(text = "Are you sure you want to quit?") },
+                            title = {
+                                Text(
+                                    text = "Are you sure you want to quit?",
+                                    color = Color.Black
+                                )
+                            },
                             confirmButton = {
-                                SimpleButton(text = "Yes", modifier = Modifier.padding(20.dp)) {
-                                    if (navController.previousBackStackEntry != null) {
-                                        navController.popBackStack()
+                                SimpleButton(
+                                    text = "Yes",
+                                    textColor = Color.Black,
+                                    modifier = Modifier.padding(20.dp),
+                                    onClick = {
+                                        if (navController.previousBackStackEntry != null) {
+                                            navController.popBackStack()
+                                        }
                                     }
-                                }
+                                )
                             },
                             dismissButton = {
-                                SimpleButton(text = "No", modifier = Modifier.padding(20.dp)) {
-                                    viewModel.onAction(PracticeViewModel.PracticeEvent.CancelQuitDialog)
-                                }
+                                SimpleButton(
+                                    text = "No",
+                                    textColor = Color.Black,
+                                    modifier = Modifier.padding(20.dp),
+                                    onClick = {
+                                        viewModel.onAction(PracticeViewModel.PracticeEvent.CancelQuitDialog)
+                                    }
+                                )
                             }
                         )
                     }

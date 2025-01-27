@@ -8,13 +8,14 @@ import androidx.compose.ui.graphics.Color
 
 @Composable
 fun SimpleButton(
-    modifier: Modifier = Modifier,
     text: String,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    textColor: Color = Color.White
 ) {
     Text(
         modifier = modifier.clickable { onClick() },
         text = text,
-        color = Color.White
+        color = textColor
     )
 }

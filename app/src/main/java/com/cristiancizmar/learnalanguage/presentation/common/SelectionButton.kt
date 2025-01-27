@@ -44,15 +44,3 @@ fun SelectionButton(
         )
     }
 }
-
-@Preview
-@Composable
-fun SelectionButton(
-) {
-    SelectionButton(
-        "SelectionButton",
-        {},
-        paddingHorizontal = 20,
-        paddingVertical = 20,
-    )
-}

@@ -9,11 +9,15 @@ import androidx.compose.ui.text.toLowerCase
 // this Extension fixes the issue and it also fixes the similar scenario with the 'fromIndex'.
 // Additionally, I added one more ".coerceAtMost(this.size)" to fix the crash that appeared when
 // fromIndex was greater than the size of the list
-fun <T> List<T>.safeSubList(fromIndex: Int, toIndex: Int): List<T> =
-    this.subList(
+fun <T> List<T>.safeSubList(fromIndex: Int, toIndex: Int): List<T> {
+    if (fromIndex > toIndex) {
+        return emptyList()
+    }
+    return this.subList(
         fromIndex.coerceAtLeast(0).coerceAtMost(this.size),
         toIndex.coerceAtMost(this.size)
     )
+}
 
 fun String.cleanWord() = toLowerCase(Locale.current)
     .replace("\"", "")

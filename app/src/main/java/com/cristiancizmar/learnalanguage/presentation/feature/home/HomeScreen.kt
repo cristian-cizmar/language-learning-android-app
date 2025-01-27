@@ -34,6 +34,7 @@ import com.cristiancizmar.learnalanguage.R
 import com.cristiancizmar.learnalanguage.presentation.common.WideSelectionButton
 import com.cristiancizmar.learnalanguage.presentation.navigation.Screen
 import com.cristiancizmar.learnalanguage.presentation.theme.LearnALanguageTheme
+import com.cristiancizmar.learnalanguage.presentation.theme.transparentTextFieldColors
 import com.cristiancizmar.learnalanguage.utils.shareBackupFile
 
 @Composable
@@ -102,14 +103,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
                 TextField(
                     value = viewModel.state.notesText,
                     onValueChange = { viewModel.onAction(HomeViewModel.HomeEvent.UpdateNotesText(it)) },
-                    colors = TextFieldDefaults.textFieldColors(
-                        textColor = Color.White,
-                        backgroundColor = Color.Black,
-                        cursorColor = Color.White,
-                        disabledLabelColor = Color.White,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent
-                    ),
+                    colors = transparentTextFieldColors(),
                     placeholder = { Text(text = stringResource(R.string.note_placeholder)) },
                     modifier = Modifier.padding(top = 15.dp)
                 )

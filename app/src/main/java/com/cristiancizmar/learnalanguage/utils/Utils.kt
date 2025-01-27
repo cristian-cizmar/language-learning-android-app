@@ -9,6 +9,14 @@ import com.cristiancizmar.learnalanguage.presentation.App
 import dagger.hilt.android.EntryPointAccessors
 import java.io.File
 
+fun percentage(correct: Int, wrong: Int): String {
+    return if (correct + wrong == 0) {
+        "?%"
+    } else {
+        "${(100 * correct / (correct + wrong))}%"
+    }
+}
+
 fun shareBackupFile(context: Context) {
     val repositoryEntryPoint = EntryPointAccessors.fromApplication(
         App.appContext!!,
@@ -36,9 +44,4 @@ fun shareBackupFile(context: Context) {
 
         context.startActivity(Intent.createChooser(shareIntent, "Share File"))
     }
-}
-
-fun percentage(correct: Int, wrong: Int): String {
-    return if (correct + wrong == 0) "?%"
-    else "${(100 * correct / (correct + wrong))}%"
 }

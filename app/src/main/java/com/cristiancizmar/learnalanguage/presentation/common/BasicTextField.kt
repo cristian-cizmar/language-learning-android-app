@@ -11,17 +11,17 @@ import androidx.compose.ui.text.input.KeyboardType
 
 @Composable
 fun BasicTextField(
-    modifier: Modifier = Modifier,
     value: String,
     onValueChange: (String) -> Unit,
     label: String,
+    modifier: Modifier = Modifier,
     keyboardType: KeyboardType = KeyboardType.Text
 ) {
     TextField(
         modifier = modifier,
         value = value,
         onValueChange = { onValueChange(it) },
-        label = { Text(label) },
+        label = { Text(label, color = Color.White) },
         colors = TextFieldDefaults.textFieldColors(
             textColor = Color.White,
             backgroundColor = Color.Black,

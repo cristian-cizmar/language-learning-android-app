@@ -14,6 +14,12 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+const val MIN_WORDS = "minWords"
+const val MAX_WORDS = "maxWords"
+const val ANSWER_DELAY = "answerDelay"
+const val SAVE_RESULTS = "saveResults"
+const val DIFFICULTY = "difficulty"
+
 @HiltViewModel
 class PracticeViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
@@ -41,22 +47,22 @@ class PracticeViewModel @Inject constructor(
         private set
 
     init {
-        savedStateHandle.get<Int>("minWords")?.let {
+        savedStateHandle.get<Int>(MIN_WORDS)?.let {
             minWords = it - 1
         }
-        savedStateHandle.get<Int>("maxWords")?.let {
+        savedStateHandle.get<Int>(MAX_WORDS)?.let {
             maxWords = it
         }
-        savedStateHandle.get<Int>("answerDelay")?.let {
+        savedStateHandle.get<Int>(ANSWER_DELAY)?.let {
             answerDelay = it
         }
-        savedStateHandle.get<Boolean>("saveResults")?.let {
+        savedStateHandle.get<Boolean>(SAVE_RESULTS)?.let {
             saveResults = it
         }
-        savedStateHandle.get<Int>("difficulty")?.let {
+        savedStateHandle.get<Int>(DIFFICULTY)?.let {
             minDifficulty = it
         }
-
+        state = state.copy(switchLanguages = fileWordsRepository.switchLanguages)
         loadWordsAndInit()
     }
 

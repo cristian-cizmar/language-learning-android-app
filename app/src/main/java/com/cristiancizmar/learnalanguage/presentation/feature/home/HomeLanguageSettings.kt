@@ -50,9 +50,11 @@ fun HomeLanguageSettings(
                 SelectionButton(
                     text = file,
                     onClick = { onSelectFile(file) },
-                    borderColor =
-                    if (selectedFileName == file) Color.Green
-                    else Color.White,
+                    borderColor = if (selectedFileName == file) {
+                        Color.Green
+                    } else {
+                        Color.White
+                    },
                     mainPaddingVertical = 0.dp
                 )
                 Image(
@@ -62,17 +64,12 @@ fun HomeLanguageSettings(
                     ),
                     contentDescription = "",
                     contentScale = ContentScale.FillHeight,
-                    modifier = Modifier.clickable {
-                        onSetFileFavorite(file)
-                    },
+                    modifier = Modifier.clickable { onSetFileFavorite(file) },
                 )
             }
         }
         WideSelectionButton(
-            text = stringResource(
-                R.string.invert_languages,
-                areLanguagesSwitched.toString()
-            ),
+            text = stringResource(R.string.switch_languages, areLanguagesSwitched.toString()),
             onClick = { onClickSwitchLanguages() },
             modifier = Modifier.padding(top = 15.dp)
         )

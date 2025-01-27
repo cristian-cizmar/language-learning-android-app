@@ -1,5 +1,4 @@
 <resources>
-    <string name="all">all</string>
     <string name="app_name">Learning</string>
     <string name="attempts_short">Attempts</string>
     <string name="answer">answer</string>
@@ -20,8 +19,7 @@
     <string name="practice">Practice</string>
     <string name="save_results">Save results: %s</string>
     <string name="search">Search</string>
-    <string name="invert_languages">Invert languages = %s</string>
-    <string name="translation_delay">translation delay</string>
+    <string name="switch_languages">Switch languages = %s</string>
     <string name="words_list">Words list</string>
     <string name="wrong">Wrong</string>
 </resources>
