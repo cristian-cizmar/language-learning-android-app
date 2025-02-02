@@ -9,6 +9,7 @@ import com.cristiancizmar.learnalanguage.data.FileWordsRepository
 import com.cristiancizmar.learnalanguage.domain.Word
 import com.cristiancizmar.learnalanguage.utils.cleanWord
 import com.cristiancizmar.learnalanguage.utils.safeSubList
+import com.cristiancizmar.learnalanguage.utils.withoutDerDieDas
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -222,7 +223,7 @@ class WordsViewModel @Inject constructor(
                 }
             if (state.sort == SORT.ORIG) {
                 newList = newList.sortedBy {
-                    it.original.cleanWord()
+                    it.original.cleanWord().withoutDerDieDas()
                 }
             }
             if (!sortAsc) {

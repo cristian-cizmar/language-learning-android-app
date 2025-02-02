@@ -134,7 +134,7 @@ fun WordsScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .horizontalScroll(rememberScrollState())
-                                .padding(top = 20.dp),
+                                .padding(top = 20.dp, start = 5.dp),
                             horizontalArrangement = Arrangement.spacedBy(5.dp)
                         ) {
                             SimpleButton(

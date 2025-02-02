@@ -23,3 +23,10 @@ fun String.cleanWord() = toLowerCase(Locale.current)
     .replace("\"", "")
     .replace("(", "")
     .replace(")", "")
+
+fun String.withoutDerDieDas(): String {
+    if (listOf(DER_PREFIX, DIE_PREFIX, DAS_PREFIX).any { this.startsWith(it) }) {
+        return this.substring(3).trim()
+    }
+    return this
+}

@@ -1,100 +1,496 @@
-1	bleistift	pencil
-2	sport	sport
-3	danke	thank you
-4	küche	kitchen
-5	banane	banana
-6	straße	street
-7	fluss	river
-8	ei	egg
-9	buch	book
-10	hund	dog
-11	flugzeug	plane
-12	fenster	window
-13	spiel	game
-14	glück	happiness
-15	familie	family
-16	strand	beach
-17	heft	notebook
-18	bett	bed
-19	musik	music
-20	entschuldigung	sorry
-21	löffel	spoon
-22	nein	no
-23	lied	song
-24	land	country
-25	flasche	bottle
-26	geld	money
-27	papier	paper
-28	kleidung	clothes
-29	bitte	please
-30	tisch	table
-31	gabel	fork
-32	käse	cheese
-33	tasse	cup
-34	vogel	bird
-35	milch	milk
-36	ja	yes
-37	lampe	lamp
-38	dorf	village
-39	luft	air
-40	feuer	fire
-41	sonne	sun
-42	zug	train
-43	pfeffer	pepper
-44	reise	trip
-45	zucker	sugar
-46	ozean	ocean
-47	traum	dream
-48	teller	plate
-49	herz	heart
-50	meer	sea
-51	berg	mountain
-52	telefon	phone
-53	arbeit	work
-54	traube	grape
-55	schuhe	shoes
-56	auto	car
-57	haus	house
-58	stern	star
-59	orange	orange
-60	welt	world
-61	stadt	city
-62	fernseher	television
-63	tür	door
-64	kuh	cow
-65	stuhl	chair
-66	liebe	love
-67	mond	moon
-68	sofa	couch
-69	wasser	water
-70	salz	salt
-71	blume	flower
-72	kugelschreiber	pen
-73	himmel	sky
-74	brücke	bridge
-75	badezimmer	bathroom
-76	erde	earth
-77	apfel	apple
-78	uhr	clock
-79	boden	floor
-80	wand	wall
-81	brot	bread
-82	baum	tree
-83	computer	computer
-84	erdbeere	strawberry
-85	essen	food
-86	spiegel	mirror
-87	kamera	camera
-88	freund	friend
-89	geschichte	story
-90	pferd	horse
-91	hallo	hello
-92	messer	knife
-93	fisch	fish
-94	schule	school
-95	katze	cat
-96	tschüss	goodbye
-97	zitrone	lemon
-98	zeit	time
-99	karte	map
-100	decke	ceiling
+1	der Tag	the day	Der Tag ist lang	The day is long
+2	die Nacht	the night	Die Nacht ist ruhig	The night is calm
+3	das Jahr	the year	Ein Jahr hat zwölf Monate	A year has twelve months
+4	der Mensch	the person, human	Die Zeit vergeht schnell	Time passes quickly
+5	die Zeit	the time
+6	der Weg	the way
+7	das Leben	the life	Das Leben ist schön	Life is beautiful
+8	der Mann	the man
+9	die Frau	the woman
+10	das Kind	the child
+11	der	the (masculine)
+12	die	the (feminine/plural)
+13	das	the (neuter)
+14	und	and
+15	sein	to be	Er ist mein Freund	He is my friend
+16	in	in	Das Buch ist in der Tasche	The book is in the bag
+17	haben	to have	Sie haben ein schönes Haus	They have a beautiful house
+18	ich	I
+19	du	you (informal singular)
+20	er	he
+21	sie	she/they
+22	es	it
+23	wir	we
+24	ihr	you (informal plural)
+25	Sie	you (formal singular/plural)
+26	weil	because	Ich bleibe zu Hause, weil es regnet	I stay at home because it is raining
+27	wenn	if, when	Ich gehe spazieren, wenn die Sonne scheint.	I go for a walk when the sun is shining
+28	wie	how, like	Sie weiß, wie man ein Fahrrad fährt	She knows how to ride a bike
+29	dass	that (conjunction)
+30	können	can
+31	müssen	must
+32	machen	to make, to do
+33	sagen	to say
+34	gehen	to go
+35	wissen	to know (facts)
+36	sehen	to see
+37	kommen	to come
+38	stehen	to stand
+39	finden	to find
+40	bleiben	to stay
+41	arbeiten	to work
+42	glauben	to believe	Ich glaube, dass er recht hat	I believe that he is right
+43	tun	to do	Was soll ich tun?	What should I do?
+44	lernen	to learn	Wir lernen Deutsch in der Schule	We learn German at school
+45	spielen	to play
+46	schreiben	to write
+47	essen	to eat
+48	trinken	to drink
+49	schlafen	to sleep
+50	die Stadt	the city
+51	das Haus	the house
+52	der Freund	the friend (male)
+53	die Freundin	the friend (female)
+54	die Arbeit	the work, job
+55	der Tisch	the table
+56	der Stuhl	the chair
+57	das Auto	the car
+58	der Hund	the dog
+59	die Katze	the cat
+60	der Vogel	the bird
+61	die Blume	the flower
+62	das Buch	the book
+63	der Lehrer	the teacher (male)
+64	die Lehrerin	the teacher (female)
+65	das Zimmer	the room
+66	die Hand	the hand
+67	das Auge	the eye
+68	der Kopf	the head
+69	nicht	not
+70	mit	with
+71	für	for
+72	von	from, of
+73	auf	on, upon
+74	zu	to
+75	an	at, on
+76	nach	after, to
+77	bei	at, near
+78	aber	but
+79	oder	or
+80	der Körper	the body
+81	die Sprache	the language
+82	das Wort	the word
+83	der Freundschaft	the friendship
+84	der Sommer	the summer
+85	der Winter	the winter
+86	der Frühling	the spring
+87	der Herbst	the autumn
+88	die Schule	the school
+89	das Kind	the child
+90	der Platz	the place, square
+91	die Frage	the question
+92	die Antwort	the answer
+93	das Bild	the picture
+94	der Name	the name
+95	der Freund	the friend (male)
+96	die Arbeit	the work
+97	das Land	the country
+98	der Staat	the state
+99	die Welt	the world
+100	das Land	the land
+101	gehen	to go
+102	kommen	to come
+103	machen	to make, to do
+104	wissen	to know (facts)
+105	sehen	to see
+106	finden	to find
+107	sagen	to say
+108	tun	to do
+109	lernen	to learn
+110	sprechen	to speak
+111	hören	to hear
+112	warten	to wait
+113	laufen	to run
+114	fahren	to drive, to travel
+115	helfen	to help
+116	glauben	to believe
+117	schlafen	to sleep
+118	essen	to eat
+119	trinken	to drink
+120	arbeiten	to work
+121	lieben	to love
+122	mögen	to like
+123	spielen	to play
+124	brauchen	to need
+125	verstehen	to understand
+126	lesen	to read
+127	schreiben	to write
+128	kommen	to arrive
+129	gut	good
+130	schlecht	bad
+131	groß	big
+132	klein	small
+133	alt	old
+134	jung	young
+135	schön	beautiful
+136	hässlich	ugly
+137	neu	new
+138	alt	old
+139	schwer	heavy, difficult
+140	leicht	light, easy
+141	kalt	cold
+142	warm	warm
+143	heiß	hot
+144	freundlich	friendly
+145	nett	nice
+146	traurig	sad
+147	glücklich	happy
+148	langweilig	boring
+149	interessant	interesting
+150	schnell	fast
+151	der Tisch	the table
+152	die Wand	the wall
+153	der Stuhl	the chair
+154	das Fenster	the window
+155	die Tür	the door
+156	das Licht	the light
+157	der Boden	the floor
+158	das Bett	the bed
+159	der Fernseher	the TV
+160	das Telefon	the phone
+161	der Computer	the computer
+162	das Radio	the radio
+163	der Kühlschrank	the fridge
+164	der Ofen	the oven
+165	der Löffel	the spoon
+166	die Gabel	the fork
+167	das Messer	the knife
+168	der Teller	the plate
+169	das Glas	the glass
+170	die Tasse	the cup
+171	die Uhr	the clock
+172	der Kalender	the calendar
+173	der Monat	the month
+174	das Datum	the date
+175	der Morgen	the morning
+176	der Abend	the evening
+177	der Nachmittag	the afternoon
+178	der Frühling	the spring
+179	der Sommer	the summer
+180	der Herbst	the autumn
+181	der Winter	the winter
+182	die Woche	the week
+183	der Monat	the month
+184	die Zeit	the time
+185	der Moment	the moment
+186	die Stunde	the hour
+187	der Augenblick	the instant
+188	der Name	the name
+189	der Titel	the title
+190	das Ziel	the goal
+191	die Idee	the idea
+192	die Meinung	the opinion
+193	der Plan	the plan
+194	der Grund	the reason
+195	die Antwort	the answer
+196	die Frage	the question
+197	der Fehler	the mistake
+198	der Weg	the way
+199	die Straße	the street
+200	das Gebäude	the building
+201	die Brücke	the bridge
+202	der Park	the park
+203	der Platz	the square, place
+204	der Garten	the garden
+205	der See	the lake
+206	der Fluss	the river
+207	das Meer	the sea
+208	der Berg	the mountain
+209	das Tal	the valley
+210	das Land	the country, land
+211	der Wald	the forest
+212	die Insel	the island
+213	die Wüste	the desert
+214	das Dorf	the village
+215	die Stadt	the city
+216	der Hauptstadt	the capital
+217	das Land	the country
+218	die Gegend	the area, region
+219	der Himmel	the sky
+220	der Regen	the rain
+221	der Schnee	the snow
+222	die Sonne	the sun
+223	der Wind	the wind
+224	die Luft	the air
+225	der Sturm	the storm
+226	der Nebel	the fog
+227	der Mond	the moon
+228	der Stern	the star
+229	der Regenbogen	the rainbow
+230	der Urlaub	the vacation
+231	die Reise	the trip
+232	der Flug	the flight
+233	die Fahrt	the ride, journey
+234	der Verkehr	the traffic
+235	die Staus	the traffic jam
+236	die Reise	the journey
+237	das Ticket	the ticket
+238	der Preis	the price
+239	billig	cheap
+240	teuer	expensive
+241	frei	free
+242	teuer	expensive
+243	alt	old
+244	neu	new
+245	früh	early
+246	spät	late
+247	regelmäßig	regular
+248	der Unterschied	the difference
+249	gleich	same, equal
+250	anders	different
+251	der Anfang	the beginning
+252	das Ende	the end
+253	der Erfolg	the success
+254	der Fehler	the mistake
+255	richtig	correct
+256	falsch	wrong
+257	der Grund	the reason
+258	weil	because
+259	obwohl	although
+260	während	while
+261	bevor	before
+262	nachher	afterwards
+263	dann	then
+264	jetzt	now
+265	immer	always
+266	nie	never
+267	oft	often
+268	selten	rarely
+269	manchmal	sometimes
+270	sofort	immediately
+271	langsam	slow
+272	schnell	fast
+273	laut	loud
+274	leise	quiet
+275	nah	near
+276	weit	far
+277	oben	up, above
+278	unten	down, below
+279	innen	inside
+280	außen	outside
+281	drinnen	indoors
+282	draußen	outdoors
+283	zuerst	first
+284	zuletzt	last
+285	gleichzeitig	at the same time
+286	dann	then
+287	sofort	immediately
+288	wichtig	important
+289	unwichtig	unimportant
+290	notwendig	necessary
+291	unnötig	unnecessary
+292	schwierig	difficult
+293	einfach	easy
+294	klar	clear
+295	unsicher	uncertain
+296	sicher	sure, safe
+297	gesund	healthy
+298	der Freund	the friend (male)
+299	die Freundin	the friend (female)
+300	der Kollege	the colleague (male)
+301	die Kollegin	the colleague (female)
+302	der Lehrer	the teacher (male)
+303	die Lehrerin	the teacher (female)
+304	die Schule	the school
+305	das Studium	the studies
+306	der Student	the student (male)
+307	die Studentin	the student (female)
+308	der Abschluss	the graduation, degree
+309	der Unterricht	the lesson, instruction
+310	das Fach	the subject
+311	die Prüfung	the exam
+312	die Note	the grade
+313	der Test	the test
+314	der Fehler	the mistake
+315	die Hilfe	the help
+316	das Angebot	the offer
+317	die Antwort	the answer
+318	die Frage	the question
+319	das Problem	the problem
+320	die Lösung	the solution
+321	der Erfolg	the success
+322	die Entscheidung	the decision
+323	der Plan	the plan
+324	das Ziel	the goal
+325	die Möglichkeit	the possibility
+326	die Chance	the chance
+327	der Vorteil	the advantage
+328	der Nachteil	the disadvantage
+329	die Freiheit	the freedom
+330	die Verantwortung	the responsibility
+331	der Kampf	the fight, battle
+332	die Hilfe	the help
+333	die Bewegung	the movement
+334	der Fortschritt	the progress
+335	die Veränderung	the change
+336	der Unterschied	the difference
+337	das Gefühl	the feeling
+338	der Zustand	the state, condition
+339	das Beispiel	the example
+340	der Grund	the reason
+341	die Erklärung	the explanation
+342	der Unterschied	the difference
+343	die Bedeutung	the meaning
+344	das Wort	the word
+345	der Satz	the sentence
+346	die Nachricht	the message
+347	der Artikel	the article
+348	immer	always
+349	niemals	never
+350	oft	often
+351	selten	rarely
+352	manchmal	sometimes
+353	sofort	immediately
+354	vielleicht	maybe
+355	wahrscheinlich	probably
+356	genau	exactly
+357	ungefähr	approximately
+358	langsam	slow
+359	schnell	fast
+360	einfach	easy
+361	schwierig	difficult
+362	wichtig	important
+363	unwichtig	unimportant
+364	notwendig	necessary
+365	unnötig	unnecessary
+366	klar	clear
+367	unklar	unclear
+368	sicher	sure, safe
+369	unsicher	unsure
+370	glücklich	happy
+371	traurig	sad
+372	nervös	nervous
+373	ruhig	calm
+374	müde	tired
+375	wach	awake
+376	stark	strong
+377	schwach	weak
+378	hoch	high
+379	niedrig	low
+380	groß	big
+381	klein	small
+382	lang	long
+383	kurz	short
+384	schwer	heavy
+385	leicht	light, easy
+386	weit	far
+387	nah	near
+388	zusammen	together
+389	getrennt	separated
+390	genau	exact
+391	ungefähr	about
+392	täglich	daily
+393	wöchentlich	weekly
+394	monatlich	monthly
+395	jährlich	yearly
+396	überall	everywhere
+397	nirgendwo	nowhere
+398	der Augenblick	the moment
+399	die Idee	the idea
+400	der Plan	the plan
+401	die Wahrheit	the truth
+402	der Spaß	the fun
+403	der Wunsch	the wish
+404	das Risiko	the risk
+405	die Gelegenheit	the opportunity
+406	der Erfolg	the success
+407	die Hoffnung	the hope
+408	die Liebe	the love
+409	der Streit	the argument
+410	der Traum	the dream
+411	der Scherz	the joke
+412	der Fehler	the mistake
+413	die Freude	the joy
+414	die Erinnerung	the memory
+415	der Kontakt	the contact
+416	der Unterschied	the difference
+417	der Beitrag	the contribution
+418	der Sinn	the meaning
+419	die Richtung	the direction
+420	der Einfluss	the influence
+421	die Beziehung	the relationship
+422	der Eindruck	the impression
+423	das Vertrauen	the trust
+424	das Gefühl	the feeling
+425	die Stärke	the strength
+426	die Schwäche	the weakness
+427	die Wahl	the choice
+428	die Entscheidung	the decision
+429	der Fortschritt	the progress
+430	der Rückschlag	the setback
+431	der Anfang	the beginning
+432	das Ende	the end
+433	der Beginn	the start
+434	die Veränderung	the change
+435	die Entwicklung	the development
+436	das Verständnis	the understanding
+437	die Idee	the idea
+438	die Notwendigkeit	the necessity
+439	der Vorteil	the advantage
+440	der Nachteil	the disadvantage
+441	das Beispiel	the example
+442	die Vorstellung	the idea, concept
+443	die Wahrheit	the truth
+444	das Problem	the problem
+445	die Lösung	the solution
+446	der Fehler	the error
+447	schnell	fast
+448	langsam	slow
+449	sofort	immediately
+450	oft	often
+451	selten	rarely
+452	immer	always
+453	niemals	never
+454	regelmäßig	regular
+455	ungefähr	approximately
+456	genau	exactly
+457	fast	almost
+458	vielleicht	maybe
+459	sicher	sure
+460	unsicher	unsure
+461	klar	clear
+462	unklar	unclear
+463	einfach	simple
+464	schwierig	difficult
+465	wichtig	important
+466	unwichtig	unimportant
+467	notwendig	necessary
+468	unnötig	unnecessary
+469	günstig	inexpensive
+470	teuer	expensive
+471	gesund	healthy
+472	krank	sick
+473	reich	rich
+474	arm	poor
+475	glücklich	happy
+476	traurig	sad
+477	nervös	nervous
+478	ruhig	calm
+479	müde	tired
+480	wach	awake
+481	stark	strong
+482	schwach	weak
+483	hoch	high
+484	niedrig	low
+485	heiß	hot
+486	kalt	cold
+487	laut	loud
+488	leise	quiet
+489	schwer	heavy
+490	leicht	light
+491	kurz	short
+492	lang	long
+493	neu	new
+494	alt	old
+495	genau	exact
+496	ungenau	inaccurate

@@ -4,6 +4,9 @@ import androidx.compose.ui.graphics.Color
 import com.cristiancizmar.learnalanguage.presentation.theme.BlueDer
 import com.cristiancizmar.learnalanguage.presentation.theme.GreenDas
 import com.cristiancizmar.learnalanguage.presentation.theme.RedDie
+import com.cristiancizmar.learnalanguage.utils.DAS_PREFIX
+import com.cristiancizmar.learnalanguage.utils.DER_PREFIX
+import com.cristiancizmar.learnalanguage.utils.DIE_PREFIX
 import com.cristiancizmar.learnalanguage.utils.cleanWord
 
 data class Word(
@@ -29,21 +32,18 @@ data class Word(
     }
 
     fun getGenderColor(): Color {
-        val derPrefix = "der "
-        val diePrefix = "die "
-        val dasPrefix = "das "
-        if (original.cleanWord().startsWith(derPrefix)
-            || translated.cleanWord().startsWith(derPrefix)
+        if (original.cleanWord().startsWith(DER_PREFIX)
+            || translated.cleanWord().startsWith(DER_PREFIX)
         ) {
             return BlueDer
         }
-        if (original.cleanWord().startsWith(diePrefix)
-            || translated.cleanWord().startsWith(diePrefix)
+        if (original.cleanWord().startsWith(DIE_PREFIX)
+            || translated.cleanWord().startsWith(DIE_PREFIX)
         ) {
             return RedDie
         }
-        if (original.cleanWord().startsWith(dasPrefix)
-            || translated.cleanWord().startsWith(dasPrefix)
+        if (original.cleanWord().startsWith(DAS_PREFIX)
+            || translated.cleanWord().startsWith(DAS_PREFIX)
         ) {
             return GreenDas
         }

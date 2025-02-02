@@ -33,7 +33,7 @@ fun WordRow(
         modifier = modifier
             .fillMaxWidth()
             .clickable { onClick() }
-            .background(word.getGenderColor())
+            .background(Color.Black)
             .border(
                 width = 1.dp,
                 color = Color.White,

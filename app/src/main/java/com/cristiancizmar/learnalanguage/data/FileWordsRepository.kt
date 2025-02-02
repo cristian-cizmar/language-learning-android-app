@@ -7,6 +7,7 @@ import android.net.Uri
 import androidx.core.text.isDigitsOnly
 import com.cristiancizmar.learnalanguage.domain.Word
 import com.cristiancizmar.learnalanguage.presentation.App
+import com.cristiancizmar.learnalanguage.utils.GERMAN_FILE
 import com.cristiancizmar.learnalanguage.utils.safeSubList
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -35,6 +36,10 @@ class FileWordsRepository {
             if (file.endsWith(".txt")) items.add(file)
         }
         items.sort()
+        if (items.contains(GERMAN_FILE)) {
+            items.remove(GERMAN_FILE)
+            items.add(0, GERMAN_FILE)
+        }
         return items
     }
 
