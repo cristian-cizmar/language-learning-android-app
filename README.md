@@ -1,6 +1,6 @@
 # Language Learning Android App
 
-Features:
+### Features:
 - Multiple languages (German, French, Italian)
 - See a customizable list of words, along with detailed data such as their difficulty level and how often you successfully translated them
 - Practice your vocabulary in a fully customizable way. Select which words you want to practice based on criteria such as difficulty
@@ -9,7 +9,7 @@ Features:
 - Import and export your data to ensure you never lose it
 - Use the Text to Speech feature to listen to the words you're learning
 
-Tech stack:
+### Tech stack:
 - Jetpack Compose
 - MVI architecture
 - Coroutines
